@@ -7,7 +7,10 @@ namespace MVC_Project.Models
 {
     public enum Category
     {
-
+        Shirt,
+        Skirt,
+        Jacket,
+        Dress
     }
 
     public class Products
@@ -17,6 +20,8 @@ namespace MVC_Project.Models
         public string Description { get; set; }
         public double Price { get; set; }
         public string Img { get; set; }
-        public { get; set; }
+        public Category category{ get; set; }
+        public bool isTradable { get; set; }
+        public DateTime CreatedAt { get; set; }
     }
 }
