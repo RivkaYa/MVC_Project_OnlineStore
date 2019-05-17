@@ -10,14 +10,14 @@ namespace MVC_Project.Models
         Customer,
         Manager
     }
-    public class Users
+    public class User
     {
         public int Id { get; set; }
         public string NickName { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public UserType UserType { get; set; }
-        public Address address { get; set; }
+        public Address Address { get; set; }
         public double PhoneNumber { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
