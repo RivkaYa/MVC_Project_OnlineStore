@@ -10,5 +10,7 @@ namespace MVC_Project.Models
         public int Id { get; set; }
         public string Color { get; set; }
         public string RGB { get; set; }
+
+        public ICollection<ProductsQuantity> ProductsQuantity { get; set; }
     }
 }

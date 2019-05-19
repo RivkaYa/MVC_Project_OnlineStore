@@ -9,5 +9,7 @@ namespace MVC_Project.Models
     {
         public int Id { get; set; }
         public string Size { get; set; }
+
+        public ICollection<ProductsQuantity> ProductsQuantity { get; set; }
     }
 }
