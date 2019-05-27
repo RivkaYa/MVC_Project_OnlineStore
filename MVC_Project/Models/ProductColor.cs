@@ -12,5 +12,6 @@ namespace MVC_Project.Models
         public string RGB { get; set; }
 
         public ICollection<ProductsQuantity> Quantity { get; set; }
+        public ICollection<OrdersHistoryProductsList> Orders { get; set; }
     }
 }

@@ -9,6 +9,6 @@ namespace MVC_Project.Models
     {
         public int ProdId { get; set; }
         public ProductColor ItemColor { get; set; }
-        public string Img { get; set; }
+        public List<string> Img { get; set; }
     }
 }

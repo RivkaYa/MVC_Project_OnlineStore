@@ -25,5 +25,6 @@ namespace MVC_Project.Models
         public bool IsTradable { get; set; }
         public DateTime CreatedAt { get; set; }
         public List<ProductsQuantity> Quantity { get; set; }
+        public List<OrdersHistoryProductsList> Orders { get; set; }
     }
 }

@@ -12,7 +12,7 @@ namespace MVC_Project.Controllers
     {
         public IActionResult Index()
         {
-            return View();
+            return View();//PartialView();-if we want to ignore the general layout, we'll use partial close
         }
 
         public IActionResult About()

@@ -11,9 +11,10 @@ using System;
 namespace MVC_Project.Migrations
 {
     [DbContext(typeof(DataStoreContext))]
-    partial class DataStoreContextModelSnapshot : ModelSnapshot
+    [Migration("20190521164129_ADDdISCOUNTfIELD")]
+    partial class ADDdISCOUNTfIELD
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -34,59 +35,6 @@ namespace MVC_Project.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Address");
-                });
-
-            modelBuilder.Entity("MVC_Project.Models.OrdersHistory", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<DateTime>("OrderDate");
-
-                    b.Property<int?>("OrderStatusId");
-
-                    b.Property<int>("UserId");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("OrderStatusId");
-
-                    b.ToTable("OrdersHistory");
-                });
-
-            modelBuilder.Entity("MVC_Project.Models.OrdersHistoryProductsList", b =>
-                {
-                    b.Property<int>("OrderId");
-
-                    b.Property<int>("ProdId");
-
-                    b.Property<int>("ColorId");
-
-                    b.Property<int>("SizeId");
-
-                    b.Property<int>("Quantity");
-
-                    b.HasKey("OrderId", "ProdId", "ColorId", "SizeId");
-
-                    b.HasIndex("ColorId");
-
-                    b.HasIndex("ProdId");
-
-                    b.HasIndex("SizeId");
-
-                    b.ToTable("OrdersHistoryProductsList");
-                });
-
-            modelBuilder.Entity("MVC_Project.Models.OrderStatus", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("Status");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("OrderStatus");
                 });
 
             modelBuilder.Entity("MVC_Project.Models.Product", b =>
@@ -198,36 +146,6 @@ namespace MVC_Project.Migrations
                     b.HasIndex("AddressId");
 
                     b.ToTable("User");
-                });
-
-            modelBuilder.Entity("MVC_Project.Models.OrdersHistory", b =>
-                {
-                    b.HasOne("MVC_Project.Models.OrderStatus", "OrderStatus")
-                        .WithMany()
-                        .HasForeignKey("OrderStatusId");
-                });
-
-            modelBuilder.Entity("MVC_Project.Models.OrdersHistoryProductsList", b =>
-                {
-                    b.HasOne("MVC_Project.Models.ProductColor", "ProductColor")
-                        .WithMany("Orders")
-                        .HasForeignKey("ColorId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("MVC_Project.Models.OrdersHistory", "OrdersHistory")
-                        .WithMany("OrderItems")
-                        .HasForeignKey("OrderId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("MVC_Project.Models.Product", "Product")
-                        .WithMany("Orders")
-                        .HasForeignKey("ProdId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("MVC_Project.Models.ProductSize", "ProductSize")
-                        .WithMany("Orders")
-                        .HasForeignKey("SizeId")
-                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("MVC_Project.Models.Product", b =>

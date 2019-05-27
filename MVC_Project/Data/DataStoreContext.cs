@@ -16,6 +16,7 @@ namespace MVC_Project.Models
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            //many to many - Quantity table
             modelBuilder.Entity<ProductsQuantity>()
                 .HasKey(t => new { t.ProdId, t.ColorId, t.SizeId });
 
@@ -33,6 +34,35 @@ namespace MVC_Project.Models
                 .HasOne(pt => pt.ProductSize)
                 .WithMany(t => t.Quantity)
                 .HasForeignKey(pt => pt.SizeId);
+
+
+
+            //Many to many - orders History
+            modelBuilder.Entity<OrdersHistoryProductsList>()
+               .HasKey( a=> new {a.OrderId, a.ProdId, a.ColorId, a.SizeId });
+
+            modelBuilder.Entity<OrdersHistoryProductsList>()//Orders to OrdersList
+                .HasOne(pt => pt.OrdersHistory)
+                .WithMany(a => a.OrderItems)
+                .HasForeignKey(pt => pt.OrderId);
+
+
+            modelBuilder.Entity<OrdersHistoryProductsList>()//Product TO OrdersList
+                .HasOne(pt => pt.Product)
+                .WithMany(p => p.Orders)
+                .HasForeignKey(pt => pt.ProdId);
+
+            modelBuilder.Entity<OrdersHistoryProductsList>()//Size TO OrdersList
+                .HasOne(pt => pt.ProductSize)
+                .WithMany(t => t.Orders)
+                .HasForeignKey(pt => pt.SizeId);
+
+            modelBuilder.Entity<OrdersHistoryProductsList>()//Color TO OrdersList
+              .HasOne(pt => pt.ProductColor)
+                .WithMany(p => p.Orders)
+                .HasForeignKey(pt => pt.ColorId);
+
+
         }
 
 
