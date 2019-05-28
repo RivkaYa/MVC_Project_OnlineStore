@@ -21,5 +21,6 @@ namespace MVC_Project.Models
         public double PhoneNumber { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
+        public string Password { get; set; }
     }
 }
