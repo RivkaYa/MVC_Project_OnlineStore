@@ -5,40 +5,145 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - FASHANISTA</title>
 
-    <environment include="Development">
-        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
-        <link rel="stylesheet" href="~/css/site.css" />
-    </environment>
-    <environment exclude="Development">
-        <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/css/bootstrap.min.css"
-              asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
-              asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
-        <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
-    </environment>
+    <title>Divisima | eCommerce Template</title>
+    <meta charset="UTF-8">
+    <meta name="description" content=" Divisima | eCommerce Template">
+    <meta name="keywords" content="divisima, eCommerce, creative, html">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Favicon -->
+    <link href="~/images/favicon.ico" rel="shortcut icon" />
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css?family=Josefin+Sans:300,300i,400,400i,700,700i" rel="stylesheet">
+
+    <!-- Stylesheets -->
+    <link href="~/css/site.css" rel="stylesheet" />
+    <link href="~/css/animate.css" rel="stylesheet" />
+    <link href="~/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/css/flaticon.css" rel="stylesheet" />
+    <link href="~/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="~/css/jquery-ui.min.css" rel="stylesheet" />
+    <link href="~/css/owl.carousel.min.css" rel="stylesheet" />
+    <link href="~/css/site.min.css" rel="stylesheet" />
+    <link href="~/css/slicknav.min.css" rel="stylesheet" />
+    <link href="~/css/style.css" rel="stylesheet" />
+
+        @*<environment include="Development">
+                <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+                <link rel="stylesheet" href="~/css/site.css" />
+            </environment>
+            <environment exclude="Development">
+                <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/css/bootstrap.min.css"
+                      asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
+                      asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
+                <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
+            </environment>*@
 </head>
 <body>
-    <nav class="navbar navbar-inverse navbar-fixed-top" dir="rtl">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">Fasha</a>
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li><a asp-area="" asp-controller="Home" asp-action="Index">Cloth</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="About">Accessories</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="Contact">Log in</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="Contact">Wish List</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="Contact">Cart</a></li>
-                </ul>
+
+    <!-- Page Preloder -->
+    @*<div id="preloder">
+        <div class="loader"></div>
+    </div>*@
+
+    <!-- Header section -->
+    <header class="header-section">
+        <div class="header-top">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-2 text-center text-lg-left">
+                        <!-- logo -->
+                        <a href="./index.html" class="site-logo">
+                            <img src="Images/logo.png" alt="">
+                            @*<img src="Images/logo_200X200.png" alt="">*@
+                        </a>
+                    </div>
+                    <div class="col-xl-6 col-lg-5">
+                        <form class="header-search-form">
+                            <input type="text" placeholder="Search on divisima ....">
+                            <button><i class="flaticon-search"></i></button>
+                        </form>
+                    </div>
+                    <div class="col-xl-4 col-lg-5">
+                        <div class="user-panel">
+                            <div class="up-item">
+                                <i class="flaticon-profile"></i>
+                                <a href="#">Sign</a> In or <a href="#">Create Account</a>
+                            </div>
+                            <div class="up-item">
+                                <div class="shopping-card">
+                                    <i class="flaticon-bag"></i>
+                                    <span>0</span>
+                                </div>
+                                <a href="#">Shopping Cart</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-    </nav>
+        <nav class="main-navbar">
+            <div class="container">
+                <!-- menu -->
+                <ul class="main-menu">
+
+                    @*<li><a href="#">Home</a></li>*@
+                    <li><a asp-controller="Home" asp-action="Index">Home</a></li>
+                    <li><a asp-controller="Products" asp-action="Index">Shop Now!</a></li>
+                    <li><a asp-controller="" asp-action="">Wishlist</a></li>
+                    <li><a asp-controller="" asp-action="">Orders History</a></li>
+                    <li><a asp-controller="" asp-action="">Cart</a></li>
+                    <li><a asp-controller="" asp-action="">My Account</a></li>
+                    
+                    <li><a href="#">Jewelry<span class="new">New</span></a> </li>
+                    <li>
+                        <a href="#">Shoes</a>
+                        <ul class="sub-menu">
+                            <li><a href="#">Sneakers</a></li>
+                            <li><a href="#">Sandals</a></li>
+                            <li><a href="#">Formal Shoes</a></li>
+                            <li><a href="#">Boots</a></li>
+                            <li><a href="#">Flip Flops</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#">Pages</a>
+                        <ul class="sub-menu">
+                            <li><a href="./product.html">Product Page</a></li>
+                            <li><a href="./category.html">Category Page</a></li>
+                            <li><a href="./cart.html">Cart Page</a></li>
+                            <li><a href="./checkout.html">Checkout Page</a></li>
+                            <li><a href="./contact.html">Contact Page</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="#">Blog</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+    <!-- Header section end -->
+    @*<nav class="navbar navbar-inverse navbar-fixed-top" dir="rtl">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">Fasha</a>
+                </div>
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        <li><a asp-area="" asp-controller="Home" asp-action="Index">Cloth</a></li>
+                        <li><a asp-area="" asp-controller="Home" asp-action="About">Accessories</a></li>
+                        <li><a asp-area="" asp-controller="Home" asp-action="Contact">Log in</a></li>
+                        <li><a asp-area="" asp-controller="Home" asp-action="Contact">Wish List</a></li>
+                        <li><a asp-area="" asp-controller="Home" asp-action="Contact">Cart</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>*@
     <div class="container body-content">
         @RenderBody()
         <hr />
@@ -47,7 +152,7 @@
         </footer>
     </div>
 
-    <environment include="Development">
+    @*<environment include="Development">
         <script src="~/lib/jquery/dist/jquery.js"></script>
         <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
         <script src="~/js/site.js" asp-append-version="true"></script>
@@ -66,7 +171,7 @@
                 integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa">
         </script>
         <script src="~/js/site.min.js" asp-append-version="true"></script>
-    </environment>
+    </environment>*@
 
     @RenderSection("Scripts", required: false)
 </body>

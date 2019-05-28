@@ -46,18 +46,8 @@ namespace MVC_Project.Controllers
 
         // GET: Products/Create
         public async Task<IActionResult> Create()
-        {
-            //var q = from s in _context.Screen.Include(s => s.Phone)
-            //        where s.Phone == null
-            //        select new { Value = s.Id, Text = s.Technology + " " + s.Type };
-
-            //ViewData["ScreenId"] = new SelectList(await q.ToListAsync(), "Value", "Text");
-
-
-
-            //var q = from s in _context.Product. Include(s => s.Category)
-            var q = from s in _context.ProductCategory //Include(s => s.Category)
-                    //where s.Category == null
+        {      
+            var q = from s in _context.ProductCategory
                     select new { Value = s.Id, Text = s.CategoryName};
 
             ViewData["Category"] = new SelectList(await q.ToListAsync(), "Value", "Text");
@@ -69,7 +59,7 @@ namespace MVC_Project.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Description,Price,IsTradable,CreatedAt")] Product product)
+        public async Task<IActionResult> Create([Bind("Category,Id,Name,Description,Price,IsTradable,CreatedAt")] Product product)
         {
             if (ModelState.IsValid)
             {
