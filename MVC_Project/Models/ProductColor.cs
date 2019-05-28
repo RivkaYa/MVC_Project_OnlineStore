@@ -13,5 +13,6 @@ namespace MVC_Project.Models
 
         public ICollection<ProductsQuantity> Quantity { get; set; }
         public ICollection<OrdersHistoryProductsList> Orders { get; set; }
+        public ICollection<ProductsImages> Images { get; set; }
     }
 }

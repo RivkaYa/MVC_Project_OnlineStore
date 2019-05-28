@@ -63,6 +63,23 @@ namespace MVC_Project.Models
                 .HasForeignKey(pt => pt.ColorId);
 
 
+
+            //Many to many - Product i,ages
+            modelBuilder.Entity<ProductsImages>()
+               .HasKey(a => new { a.ProdId, a.ColorId});
+
+            modelBuilder.Entity<ProductsImages>()//ProductID
+                .HasOne(pt => pt.Product)
+                .WithMany(a => a.Images)
+                .HasForeignKey(pt => pt.ProdId);
+
+
+            modelBuilder.Entity<ProductsImages>()//colorID
+                .HasOne(pt => pt.ItemColor)
+                .WithMany(p => p.Images)
+                .HasForeignKey(pt => pt.ColorId);
+
+
         }
 
 
@@ -70,5 +87,6 @@ namespace MVC_Project.Models
 
 
         public DbSet<MVC_Project.Models.Product> Product { get; set; }
+        public DbSet<MVC_Project.Models.ProductCategory> ProductCategory { get; set; }
     }
 }

@@ -141,6 +141,21 @@ namespace MVC_Project.Migrations
                     b.ToTable("ProductColor");
                 });
 
+            modelBuilder.Entity("MVC_Project.Models.ProductsImages", b =>
+                {
+                    b.Property<int>("ProdId");
+
+                    b.Property<int>("ColorId");
+
+                    b.Property<string>("ImgSrc");
+
+                    b.HasKey("ProdId", "ColorId");
+
+                    b.HasIndex("ColorId");
+
+                    b.ToTable("ProductsImages");
+                });
+
             modelBuilder.Entity("MVC_Project.Models.ProductSize", b =>
                 {
                     b.Property<int>("Id")
@@ -235,6 +250,19 @@ namespace MVC_Project.Migrations
                     b.HasOne("MVC_Project.Models.ProductCategory", "Category")
                         .WithMany("ProductsList")
                         .HasForeignKey("CategoryId");
+                });
+
+            modelBuilder.Entity("MVC_Project.Models.ProductsImages", b =>
+                {
+                    b.HasOne("MVC_Project.Models.ProductColor", "ItemColor")
+                        .WithMany("Images")
+                        .HasForeignKey("ColorId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("MVC_Project.Models.Product", "Product")
+                        .WithMany("Images")
+                        .HasForeignKey("ProdId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("MVC_Project.Models.ProductsQuantity", b =>

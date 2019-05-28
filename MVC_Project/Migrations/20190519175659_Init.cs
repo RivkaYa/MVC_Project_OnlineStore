@@ -101,7 +101,7 @@ namespace MVC_Project.Migrations
                     Description = table.Column<string>(nullable: true),
                     Name = table.Column<string>(nullable: true),
                     Price = table.Column<double>(nullable: false),
-                    isTradable = table.Column<bool>(nullable: false)
+                    IsTradable = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {

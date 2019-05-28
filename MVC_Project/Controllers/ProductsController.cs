@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -21,6 +22,7 @@ namespace MVC_Project.Controllers
         // GET: Products
         public async Task<IActionResult> Index()
         {
+            var databaseContext = _context.Product.Include(x => x.Quantity).Include(x=>x.Category);
             return View(await _context.Product.ToListAsync());
         }
 
@@ -43,8 +45,22 @@ namespace MVC_Project.Controllers
         }
 
         // GET: Products/Create
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
+            //var q = from s in _context.Screen.Include(s => s.Phone)
+            //        where s.Phone == null
+            //        select new { Value = s.Id, Text = s.Technology + " " + s.Type };
+
+            //ViewData["ScreenId"] = new SelectList(await q.ToListAsync(), "Value", "Text");
+
+
+
+            //var q = from s in _context.Product. Include(s => s.Category)
+            var q = from s in _context.ProductCategory //Include(s => s.Category)
+                    //where s.Category == null
+                    select new { Value = s.Id, Text = s.CategoryName};
+
+            ViewData["Category"] = new SelectList(await q.ToListAsync(), "Value", "Text");
             return View();
         }
 
@@ -53,10 +69,11 @@ namespace MVC_Project.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Description,Price,isTradable,CreatedAt")] Product product)
+        public async Task<IActionResult> Create([Bind("Id,Name,Description,Price,IsTradable,CreatedAt")] Product product)
         {
             if (ModelState.IsValid)
             {
+                product.CreatedAt = DateTime.Now;
                 _context.Add(product);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -85,7 +102,7 @@ namespace MVC_Project.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Description,Price,isTradable,CreatedAt")] Product product)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Description,Price,IsTradable,CreatedAt")] Product product)
         {
             if (id != product.Id)
             {
@@ -138,6 +155,7 @@ namespace MVC_Project.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
+            //ViewData["Categories"];
             var product = await _context.Product.SingleOrDefaultAsync(m => m.Id == id);
             _context.Product.Remove(product);
             await _context.SaveChangesAsync();

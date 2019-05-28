@@ -9,7 +9,7 @@ namespace MVC_Project.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.RenameColumn(
-                name: "isTradable",
+                name: "IsTradable",
                 table: "Product",
                 newName: "IsTradable");
 
@@ -29,7 +29,7 @@ namespace MVC_Project.Migrations
             migrationBuilder.RenameColumn(
                 name: "IsTradable",
                 table: "Product",
-                newName: "isTradable");
+                newName: "IsTradable");
         }
     }
 }
