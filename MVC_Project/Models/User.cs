@@ -8,7 +8,8 @@ namespace MVC_Project.Models
     public enum UserType
     {
         Customer,
-        Manager
+        Manager,
+        Provider
     }
     public class User
     {
@@ -21,6 +22,7 @@ namespace MVC_Project.Models
         public double PhoneNumber { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
+        public string Email { get; set; }
         public string Password { get; set; }
     }
 }

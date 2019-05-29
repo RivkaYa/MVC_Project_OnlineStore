@@ -41,6 +41,29 @@ namespace MVC_Project.Controllers
                 return NotFound();
             }
 
+
+            //var innerJoinQuery =
+            //    from category in categories
+            //    join prod in products on category.ID equals prod.CategoryID
+            //    select new { ProductName = prod.Name, Category = category.Name }; //produces flat sequence
+
+            //img:
+            var imgSrc = _context.ProductsImages.Where(x => x.ProdId == id).First().ImgSrc;
+            //ViewBag.ImgSrc = imgSrc;
+            ViewData["ImgSrc"] = imgSrc;
+
+            //availability,
+            var isAvailable = _context.Product.First(x => x.Id == id).IsTradable && 
+                              _context.ProductsQuantity.Where(x => x.ProdId == id).ToList().Select(x=>x.Quantity).Sum()>0;
+            ViewBag.IsAvailable =isAvailable?"In stock":"Sold Out";
+
+            //sizes
+            var sizeQ = from product1 in _context.Product
+                     join quantity in _context.ProductsQuantity on product1.Id equals quantity.ProdId
+                     join size in _context.ProductSize on quantity.SizeId equals size.Id
+                     select new { Value = size.Id, Text = size.Size };
+            ViewData["Size"] = new SelectList(await sizeQ.ToListAsync(), "Value", "Text");
+
             return View(product);
         }
 

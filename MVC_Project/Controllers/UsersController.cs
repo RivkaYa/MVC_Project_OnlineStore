@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -57,6 +58,8 @@ namespace MVC_Project.Controllers
         {
             if (ModelState.IsValid)
             {
+                user.UserType = UserType.Customer;
+                user.CreatedAt = DateTime.Now;
                 _context.Add(user);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -147,6 +150,42 @@ namespace MVC_Project.Controllers
         private bool UserExists(int id)
         {
             return _context.User.Any(e => e.Id == id);
+        }
+
+
+        public void LoginFlow(string email, string password)
+        {
+            var hashPas = HashSHA1(password);
+            var user = _context.User.First(x => x.Email.ToLower().Equals(email.ToLower()));
+            string passInDB;
+            if (user!=null)
+            {
+                passInDB = user.Password;
+                if(hashPas.Equals(passInDB))
+                {
+                    //login
+                }
+            }
+            else
+            {
+                throw new Exception("email doesn't exists");//need to not throw an ex' but show an error to the user
+            }
+        }
+
+
+
+        private static string HashSHA1(string value)
+        {
+            var sha1 = System.Security.Cryptography.SHA1.Create();
+            var inputBytes = Encoding.ASCII.GetBytes(value);
+            var hash = sha1.ComputeHash(inputBytes);
+
+            var sb = new StringBuilder();
+            for (var i = 0; i < hash.Length; i++)
+            {
+                sb.Append(hash[i].ToString("X2"));
+            }
+            return sb.ToString();
         }
     }
 }

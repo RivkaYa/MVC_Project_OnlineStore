@@ -54,7 +54,7 @@
                     <div class="col-lg-2 text-center text-lg-left">
                         <!-- logo -->
                         <a href="./index.html" class="site-logo">
-                            <img src="Images/logo.png" alt="">
+                            <img src="~/images/logo.png" alt=""/>
                             @*<img src="Images/logo_200X200.png" alt="">*@
                         </a>
                     </div>
@@ -93,7 +93,7 @@
                     <li><a asp-controller="" asp-action="">Wishlist</a></li>
                     <li><a asp-controller="" asp-action="">Orders History</a></li>
                     <li><a asp-controller="" asp-action="">Cart</a></li>
-                    <li><a asp-controller="" asp-action="">My Account</a></li>
+                    <li><a asp-controller="Users" asp-action="Edit">My Account</a></li>
                     
                     <li><a href="#">Jewelry<span class="new">New</span></a> </li>
                     <li>
@@ -152,7 +152,7 @@
         </footer>
     </div>
 
-    @*<environment include="Development">
+    <environment include="Development">
         <script src="~/lib/jquery/dist/jquery.js"></script>
         <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
         <script src="~/js/site.js" asp-append-version="true"></script>
@@ -171,7 +171,7 @@
                 integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa">
         </script>
         <script src="~/js/site.min.js" asp-append-version="true"></script>
-    </environment>*@
+    </environment>
 
     @RenderSection("Scripts", required: false)
 </body>
