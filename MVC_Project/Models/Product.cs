@@ -6,14 +6,6 @@ using System.Threading.Tasks;
 
 namespace MVC_Project.Models
 {
-    //public enum Category
-    //{
-    //    Shirt,
-    //    Skirt,
-    //    Jacket,
-    //    Dress
-    //}
-
     public class Product
     {
         public int Id { get; set; }

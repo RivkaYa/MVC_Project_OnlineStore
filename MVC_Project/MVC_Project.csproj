@@ -6,10 +6,18 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Views\Home\bg-2.jpg" />
+    <None Remove="Views\Home\bg.jpg" />
     <None Remove="Views\Users\bg-registration-form-1.jpg" />
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="Views\Home\bg-2.jpg">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Views\Home\bg.jpg">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
     <Content Include="Views\Users\bg-registration-form-1.jpg">
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>

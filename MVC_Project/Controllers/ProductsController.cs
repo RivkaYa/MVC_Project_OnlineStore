@@ -22,12 +22,24 @@ namespace MVC_Project.Controllers
         // GET: Products
         public async Task<IActionResult> Index()
         {
-            var databaseContext = _context.Product.Include(x => x.Quantity).Include(x=>x.Category);
-            var databaseContextWithImages = _context.Product.Include(x => x.Images);
+            //var databaseContext = _context.Product.Include(x => x.Quantity).Include(x=>x.Category);
+            //var databaseContextWithImages = _context.Product.Include(x => x.Images);
 
-            var productsListOriginal = _context.Product.ToListAsync();
-            var productsList = _context.Product.Include(x=>x.Images).ToListAsync();
+            //var productsListOriginal = _context.Product.ToListAsync();
 
+            //sizes
+            var sizeQ =  from size in _context.ProductSize 
+                         select new { Value = size.Id, Text = size.Size };
+            ViewData["Size"] = new SelectList(await sizeQ.ToListAsync(), "Value", "Text");
+
+            //categories
+            var categoryQ= from s in _context.ProductCategory
+                    select new { Value = s.Id, Text = s.CategoryName };
+
+            ViewData["Category"] = new SelectList(await categoryQ.ToListAsync(), "Value", "Text");
+
+            var productsList = _context.Product.Include(x=>x.Images).Where(x=>x.Images.Count>0).Include(y=>y.Quantity).ToListAsync();
+            
             return View(await productsList);
         }
 
@@ -69,11 +81,25 @@ namespace MVC_Project.Controllers
 
         // GET: Products/Create
         public async Task<IActionResult> Create()
-        {      
+        {
+            //Colors
+            var colorQ = from s in _context.ProductColor
+                         select new { Value = s.Id, Text = s.Color };
+
+            ViewData["Color"] = new SelectList(await colorQ.ToListAsync(), "Value", "Text");
+
+            //sizes
+            var sizeQ = from size in _context.ProductSize
+                        select new { Value = size.Id, Text = size.Size };
+            ViewData["Size"] = new SelectList(await sizeQ.ToListAsync(), "Value", "Text");
+
+            //categories:
             var q = from s in _context.ProductCategory
-                    select new { Value = s.Id, Text = s.CategoryName};
+                    select new  { Value = s.Id, Text = s.CategoryName};
 
             ViewData["Category"] = new SelectList(await q.ToListAsync(), "Value", "Text");
+            //ViewData["Category"] = _context.ProductCategory.ToList();
+
             return View();
         }
 
@@ -86,6 +112,11 @@ namespace MVC_Project.Controllers
         {
             if (ModelState.IsValid)
             {
+                if(product.Images==null)
+                {
+                    product.Images = new List<ProductsImages>() { };
+                    product.Images.Add(new ProductsImages() { ProdId = product.Id, ColorId = 1, ImgSrc = "Poster_not_available.jpg" });
+                }
                 product.CreatedAt = DateTime.Now;
                 _context.Add(product);
                 await _context.SaveChangesAsync();

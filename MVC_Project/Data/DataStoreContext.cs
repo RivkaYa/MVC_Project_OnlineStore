@@ -90,6 +90,7 @@ namespace MVC_Project.Models
         public DbSet<MVC_Project.Models.ProductCategory> ProductCategory { get; set; }
         public DbSet<MVC_Project.Models.ProductsQuantity> ProductsQuantity { get; set; }
         public DbSet<MVC_Project.Models.ProductSize> ProductSize { get; set; }
+        public DbSet<MVC_Project.Models.ProductColor> ProductColor { get; set; }
         public DbSet<MVC_Project.Models.ProductsImages> ProductsImages { get; set; }
     }
 }
