@@ -23,7 +23,12 @@ namespace MVC_Project.Controllers
         public async Task<IActionResult> Index()
         {
             var databaseContext = _context.Product.Include(x => x.Quantity).Include(x=>x.Category);
-            return View(await _context.Product.ToListAsync());
+            var databaseContextWithImages = _context.Product.Include(x => x.Images);
+
+            var productsListOriginal = _context.Product.ToListAsync();
+            var productsList = _context.Product.Include(x=>x.Images).ToListAsync();
+
+            return View(await productsList);
         }
 
         // GET: Products/Details/5
@@ -42,15 +47,10 @@ namespace MVC_Project.Controllers
             }
 
 
-            //var innerJoinQuery =
-            //    from category in categories
-            //    join prod in products on category.ID equals prod.CategoryID
-            //    select new { ProductName = prod.Name, Category = category.Name }; //produces flat sequence
-
             //img:
-            var imgSrc = _context.ProductsImages.Where(x => x.ProdId == id).First().ImgSrc;
+            //var imgSrc = _context.ProductsImages.Where(x => x.ProdId == id).First().ImgSrc;
             //ViewBag.ImgSrc = imgSrc;
-            ViewData["ImgSrc"] = imgSrc;
+            ViewData["ImgSrc"] = GetImagesSrcByID(id.Value);            
 
             //availability,
             var isAvailable = _context.Product.First(x => x.Id == id).IsTradable && 
@@ -179,5 +179,15 @@ namespace MVC_Project.Controllers
         {
             return _context.Product.Any(e => e.Id == id);
         }
+
+
+
+
+
+        private List<string> GetImagesSrcByID(int id)
+        {
+            return _context.ProductsImages.Where(x => x.ProdId == id).Select(x=>x.ImgSrc).ToList();
+        }
+
     }
 }

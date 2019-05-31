@@ -40,8 +40,8 @@
                 <div class="product-pic-zoom">
                     @*<img class="product-big-img" src="~images/single-product/1.jpg" alt="">*@
                     @*<img class="product-big-img" src="~/images/Products/1540348009287236357.jpg" alt="" />works*@
-                    @*<img class="product-big-img" src="@ViewData["ImgSrc"]" alt="" />*@@* doesn't work since it contains the relative path: http://localhost:53416/Products/Details/~images/Products/1540348009287236357.jpg*@
-            </div>
+                    <img class="product-big-img" src="~/images/Products/@ViewData["ImgSrc"]" alt="" />@* doesn't work since it contains the relative path: http://localhost:53416/Products/Details/~images/Products/1540348009287236357.jpg*@
+                </div>
 
             @*<div class="product-thumbs" tabindex="1" style="overflow: hidden; outline: none;">
             <div class="product-thumbs-track">
@@ -55,9 +55,7 @@
 
         <div class="col-lg-6 product-details">
             <h2 class="p-title">@Html.DisplayFor(model => model.Name)</h2>
-            <h3 class="p-price">
-                $            @Html.DisplayFor(model => model.Price)
-            </h3>
+            <h3 class="p-price">$ @Html.DisplayFor(model => model.Price) </h3>
             <h4 class="p-stock">Available: <span>@ViewBag.IsAvailable</span></h4>
             <div class="p-rating">
                 <i class="fa fa-star-o"></i>
@@ -75,10 +73,10 @@
 
                 @foreach (var size in ViewBag.Size)
                 {
-                    <div class="sc-item">
-                        <input type="radio" name="sc" id="xs-size">
-                        <label for="xs-size">@size.Text</label>
-                    </div>
+                  <div class="sc-item">
+                      <input type="radio" name="sc" id="@size.Text">
+                      <label for="@size.Text">@size.Text</label>
+                  </div>
                 }
                 @*<div class="sc-item">
                 <input type="radio" name="sc" id="xs-size">
@@ -109,7 +107,7 @@
                 <p>Quantity</p>
                 <div class="pro-qty"><input type="text" value="1"></div>
             </div>
-            <a href="#" class="site-btn">SHOP NOW</a>
+            <a href="#" class="site-btn" >SHOP NOW</a>
             <div id="accordion" class="accordion-area">
                 <div class="panel">
                     <div class="panel-header" id="headingOne">
@@ -153,6 +151,9 @@
                 </div>
             </div>
             <div class="social-sharing">
+                <a href="http://www.facebook.com/sharer/sharer.php?s=100&p[url]=
+http://localhost:53416/Products/Details/5/#Register&p[images]=
+&p[title]=title TEST&p[summary]=sUMMARY TEST">Share on Facebook</a>
                 <a href=""><i class="fa fa-google-plus"></i></a>
                 <a href=""><i class="fa fa-pinterest"></i></a>
                 <a href=""><i class="fa fa-facebook"></i></a>

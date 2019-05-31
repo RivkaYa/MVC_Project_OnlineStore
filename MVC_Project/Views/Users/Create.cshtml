@@ -36,20 +36,25 @@
                 <i class="zmdi zmdi-account"></i>
             </div>
 
+            <div class="form-wrapper">
+                <input asp-for="Email" placeholder="Username" class="form-control">
+                <span asp-validation-for="Email" class="text-danger"></span>
+                <i class="zmdi zmdi-account"></i>
+            </div>
 
             <div class="form-wrapper">
                 <input type="text" placeholder="Email Address" class="form-control">
                 <i class="zmdi zmdi-email"></i>
             </div>
             @*<div class="form-wrapper">
-                <select name="" id="" class="form-control">
-                    <option value="" disabled selected>Gender</option>
-                    <option value="male">Male</option>
-                    <option value="femal">Female</option>
-                    <option value="other">Other</option>
-                </select>
-                <i class="zmdi zmdi-caret-down" style="font-size: 17px"></i>
-            </div>*@
+            <select name="" id="" class="form-control">
+                <option value="" disabled selected>Gender</option>
+                <option value="male">Male</option>
+                <option value="femal">Female</option>
+                <option value="other">Other</option>
+            </select>
+            <i class="zmdi zmdi-caret-down" style="font-size: 17px"></i>
+        </div>*@
 
 
             <div class="form-wrapper">
@@ -58,15 +63,15 @@
                 <i class="zmdi zmdi-lock"></i>
             </div>
             <div class="form-wrapper">
-                <input  type="password" placeholder="Confirm Password" class="form-control">
+                <input type="password" placeholder="Confirm Password" class="form-control">
                 <i class="zmdi zmdi-lock"></i>
             </div>
 
 
             @*<button>
-                Register
-                <i class="zmdi zmdi-arrow-right"></i>
-            </button>*@
+            Register
+            <i class="zmdi zmdi-arrow-right"></i>
+        </button>*@
             <div class="form-group">
                 <input type="submit" value="Register" class="btn btn-primary" />
             </div>
