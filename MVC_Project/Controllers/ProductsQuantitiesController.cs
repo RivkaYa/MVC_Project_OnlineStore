@@ -55,12 +55,21 @@ namespace MVC_Project.Controllers
             return View();
         }
 
+        public IActionResult Create(int prodID)
+        {
+            //ViewData["ProdId"] = new SelectList(_context.Product, "Id", "Id");
+            ViewData["ProdId"] = prodID;
+            ViewData["ColorId"] = new SelectList(_context.ProductColor, "Id", "Id");
+            ViewData["SizeId"] = new SelectList(_context.ProductSize, "Id", "Id");
+            return View();
+        }
+
         // POST: ProductsQuantities/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ProdId,SizeId,ColorId,Quantity")] ProductsQuantity productsQuantity)
+        public async Task<IActionResult> CreateSpesificQuantity([Bind("ProdId,SizeId,ColorId,Quantity")] ProductsQuantity productsQuantity)
         {
             if (ModelState.IsValid)
             {

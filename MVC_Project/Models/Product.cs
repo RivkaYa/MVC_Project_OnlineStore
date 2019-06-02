@@ -16,7 +16,8 @@ namespace MVC_Project.Models
         public double DiscountPct { get; set; } = 0;
        // public int CategoryId { get; set; }
 
-        public ProductCategory CategoryId{ get; set; }
+        public int CategoryId{ get; set; }
+        public ProductCategory Category{ get; set; }
         public bool IsTradable { get; set; }
         public DateTime CreatedAt { get; set; }
         public List<ProductsQuantity> Quantity { get; set; }

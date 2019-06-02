@@ -108,7 +108,7 @@ namespace MVC_Project.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Category,Id,Name,Description,Price,IsTradable,CreatedAt")] Product product)
+        public async Task<IActionResult> Create([Bind("CategoryId,Id,Name,Description,Price,IsTradable,CreatedAt")] Product product)
         {
             if (ModelState.IsValid)
             {
@@ -121,7 +121,8 @@ namespace MVC_Project.Controllers
                 _context.Add(product);
                 await _context.SaveChangesAsync();
                 //return RedirectToAction(nameof(Index));
-                return RedirectToAction("Create", controllerName: "ProductsQuantities");
+                var createdProd= _context.Product.LastOrDefault();
+                return RedirectToAction("CreateSpesificQuantity", controllerName: "ProductsQuantities", routeValues:createdProd.Id);
             }
             return View(product);
         }
