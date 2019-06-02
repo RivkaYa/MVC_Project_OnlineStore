@@ -3,6 +3,17 @@
 @{
     ViewData["Title"] = "Index";
 }
+<!-- Stylesheets -->
+<link href="~/css/animate.css" rel="stylesheet" />
+<link href="~/css/bootstrap.min.css" rel="stylesheet" />
+<link href="~/css/flaticon.css" rel="stylesheet" />
+<link href="~/css/font-awesome.min.css" rel="stylesheet" />
+<link href="~/css/jquery-ui.min.css" rel="stylesheet" />
+<link href="~/css/owl.carousel.min.css" rel="stylesheet" />
+<link href="~/css/site.css" rel="stylesheet" />
+<link href="~/css/site.min.css" rel="stylesheet" />
+<link href="~/css/slicknav.min.css" rel="stylesheet" />
+<link href="~/css/style.css" rel="stylesheet" />
 
 <h2>Index</h2>
 <p>
@@ -24,16 +35,6 @@
                             <li>  <a href="#">@item.Text</a></li>
                         }
 
-                        @*<li>
-                            <a href="#">Woman wear</a>*@
-                        @*<ul class="sub-menu">
-                                <li><a href="#">Midi Dresses <span>(2)</span></a></li>
-                                <li><a href="#">Maxi Dresses<span>(56)</span></a></li>
-                                <li><a href="#">Prom Dresses<span>(36)</span></a></li>
-                                <li><a href="#">Little Black Dresses <span>(27)</span></a></li>
-                                <li><a href="#">Mini Dresses<span>(19)</span></a></li>
-                            </ul>*@
-                        @*</li>*@
                     </ul>
                 </div>
                 <div class="filter-widget mb-0">
@@ -130,20 +131,21 @@
                             <div class="product-item">
                                 <div class="pi-pic">
                                     <div class="tag-sale">ON SALE</div>
-                                    <img src="~/images/Products/@product.Images[0].ImgSrc" alt="">
+                                    <a asp-action="Details" asp-route-id="@product.Id">
+                                        <img asp-action="Details" asp-route-id="@product.Id" src="~/images/Products/@product.Images[0].ImgSrc" alt=""> 
+                                    </a> |
                                     <div class="pi-links">
                                         <a href="#" class="add-card"><i class="flaticon-bag"></i><span>ADD TO CART</span></a>
                                         <a href="#" class="wishlist-btn"><i class="flaticon-heart"></i></a>
                                     </div>
                                 </div>
                                 <div class="pi-text">
-                                    <h6>@product.Price</h6>
+                                    <h6> $@product.Price</h6>
                                     <p>@product.Name</p>
-                                    @*<p>@product.Description</p>*@
                                 </div>
                             </div>
                         </div>
-                    }  
+                    }
                     <div class="text-center w-100 pt-3">
                         <button class="site-btn sb-line sb-dark">LOAD MORE</button>
                     </div>
@@ -203,7 +205,7 @@
 
 
                 <td>
-                    @Html.DisplayFor(modelItem => item.Category.CategoryName)
+                    @Html.DisplayFor(modelItem => item.CategoryId.CategoryName)
                 </td>
                 <td>
                     <img src="~/images/Products/@item.Images[0].ImgSrc" alt="">

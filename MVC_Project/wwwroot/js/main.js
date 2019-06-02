@@ -55,9 +55,11 @@ $(window).on('load', function() {
 	/*------------------
 		Background Set
 	--------------------*/
-	$('.set-bg').each(function() {
-		var bg = $(this).data('setbg');
-		$(this).css('background-image', 'url(' + bg + ')');
+    $('.set-bg').each(function () {
+        var bg = this.getAttribute('data-setbg');
+        //$(this).css('background-image', 'url(https://etoro-cdn.etorostatic.com/studio/content/lp/cache_1/bitcoin/v32/images/bg/bg.jpg)');
+        $(this).css('background-image', 'url('+bg+')');
+    
 	});
 
 

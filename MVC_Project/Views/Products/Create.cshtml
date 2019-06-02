@@ -34,8 +34,8 @@
 
 
             <div class="form-group">
-                <label asp-for="Category" class="control-label"></label>
-                <select asp-for="Category" class="form-control" asp-items="ViewBag.Category"></select>
+                <label asp-for="CategoryId" class="control-label"></label>
+                <select id="categoryID" asp-for="CategoryId" class="form-control" asp-items="ViewBag.Category"></select>
                 @*<select asp-for="Category" class="form-control" asp-items="ViewBag.Category.CategoryName"></select>*@
             </div>
 
@@ -83,7 +83,8 @@
 
 
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-default" />
+                @*<input id="createBtn" type="submit" value="Create" class="btn btn-default" />*@
+                <input id="createBtn" type="button" value="Create" class="btn btn-default" />
             </div>
         </form>
     </div>
@@ -96,3 +97,4 @@
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
+<script src="~/js/CreateProduct.js"></script>

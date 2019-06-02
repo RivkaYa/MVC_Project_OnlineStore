@@ -11,9 +11,10 @@ using System;
 namespace MVC_Project.Migrations
 {
     [DbContext(typeof(DataStoreContext))]
-    partial class DataStoreContextModelSnapshot : ModelSnapshot
+    [Migration("20190602155103_updateClass")]
+    partial class updateClass
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -94,7 +95,7 @@ namespace MVC_Project.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<int?>("CategoryIdId");
+                    b.Property<int?>("CategoryId");
 
                     b.Property<DateTime>("CreatedAt");
 
@@ -110,7 +111,7 @@ namespace MVC_Project.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CategoryIdId");
+                    b.HasIndex("CategoryId");
 
                     b.ToTable("Product");
                 });
@@ -251,9 +252,9 @@ namespace MVC_Project.Migrations
 
             modelBuilder.Entity("MVC_Project.Models.Product", b =>
                 {
-                    b.HasOne("MVC_Project.Models.ProductCategory", "CategoryId")
+                    b.HasOne("MVC_Project.Models.ProductCategory", "Category")
                         .WithMany("ProductsList")
-                        .HasForeignKey("CategoryIdId");
+                        .HasForeignKey("CategoryId");
                 });
 
             modelBuilder.Entity("MVC_Project.Models.ProductsImages", b =>

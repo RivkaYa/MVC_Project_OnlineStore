@@ -62,7 +62,7 @@ namespace MVC_Project.Controllers
             //img:
             //var imgSrc = _context.ProductsImages.Where(x => x.ProdId == id).First().ImgSrc;
             //ViewBag.ImgSrc = imgSrc;
-            ViewData["ImgSrc"] = GetImagesSrcByID(id.Value);            
+            ViewData["ImgSrc"] = GetImagesSrcByID(id.Value)[0];            
 
             //availability,
             var isAvailable = _context.Product.First(x => x.Id == id).IsTradable && 
@@ -120,7 +120,8 @@ namespace MVC_Project.Controllers
                 product.CreatedAt = DateTime.Now;
                 _context.Add(product);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                //return RedirectToAction(nameof(Index));
+                return RedirectToAction("Create", controllerName: "ProductsQuantities");
             }
             return View(product);
         }
@@ -206,19 +207,28 @@ namespace MVC_Project.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        public void AddToCart(int productId, int size, int quantity, int color)
+        {
+            
+
+        }
+
+
+
+
+
+        #region DB queries
         private bool ProductExists(int id)
         {
             return _context.Product.Any(e => e.Id == id);
         }
 
-
-
-
-
         private List<string> GetImagesSrcByID(int id)
         {
-            return _context.ProductsImages.Where(x => x.ProdId == id).Select(x=>x.ImgSrc).ToList();
+            return _context.ProductsImages.Where(x => x.ProdId == id).Select(x => x.ImgSrc).ToList();
         }
+        #endregion
+
 
     }
 }

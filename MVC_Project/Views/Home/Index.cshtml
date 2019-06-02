@@ -1,4 +1,6 @@
-﻿@{
+﻿@model IEnumerable<MVC_Project.Models.Product>
+
+@{
     ViewData["Title"] = "Home Page!!";
 }
 
@@ -26,9 +28,10 @@
     <section class="hero-section">
         <div class="hero-slider owl-carousel">
             @*<div class="hs-item set-bg" data-setbg="~/images/Banners/bg-2.jpg">*@
-            @*<div class="hs-item set-bg" data-setbg="../../wwwroot/images/Banners/bg-2.jpg">*@
+            <div class="hs-item set-bg" data-setbg="../../wwwroot/images/Banners/bg-2.jpg">
             @*<div class="hs-item set-bg" data-setbg="bg.jpg">*@
-            <div class="hs-item set-bg" data-setbg="~/images/Banners/bg.jpg">
+            @*<div class="hs-item set-bg" data-setbg="bg.jpg">*@
+            @*<div class="hs-item set-bg" data-setbg="https://bit.ly/2Wgb5TD">@*works*@
                 <div class="container">
                     <div class="row">
                         <div class="col-xl-6 col-lg-7 text-white">
@@ -107,83 +110,38 @@
     </div>
 </section>
 <!-- Features section end -->
+
 <!-- letest product section -->
 <section class="top-letest-product-section">
     <div class="container">
         <div class="section-title">
             <h2>LATEST PRODUCTS</h2>
         </div>
+       
         <div class="product-slider owl-carousel">
-            <div class="product-item">
-                <div class="pi-pic">
-                    <img src="~/images/product/1.jpg" alt="">
-                    <div class="pi-links">
-                        <a href="#" class="add-card"><i class="flaticon-bag"></i><span>ADD TO CART</span></a>
-                        <a href="#" class="wishlist-btn"><i class="flaticon-heart"></i></a>
+            @foreach (var product in Model)
+            {
+                <div class="product-item">
+                    <div class="pi-pic">
+                        <a asp-action="Details" asp-route-id="@product.Id">
+                            <img asp-action="Details" asp-route-id="@product.Id" src="~/images/Products/@product.Images[0].ImgSrc" alt="">
+                        </a> |
+                        <div class="pi-links">
+                            <a href="#" class="add-card"><i class="flaticon-bag"></i><span>ADD TO CART</span></a>
+                            <a href="#" class="wishlist-btn"><i class="flaticon-heart"></i></a>
+                        </div>
+                    </div>
+                    <div class="pi-text">
+                        <h6>$@product.Price</h6>
+                        <p>@product.Name </p>
                     </div>
                 </div>
-                <div class="pi-text">
-                    <h6>$35,00</h6>
-                    <p>Flamboyant Pink Top </p>
-                </div>
-            </div>
-            <div class="product-item">
-                <div class="pi-pic">
-                    <div class="tag-new">New</div>
-                    <img src="~/images/product/2.jpg" alt="">
-                    <div class="pi-links">
-                        <a href="#" class="add-card"><i class="flaticon-bag"></i><span>ADD TO CART</span></a>
-                        <a href="#" class="wishlist-btn"><i class="flaticon-heart"></i></a>
-                    </div>
-                </div>
-                <div class="pi-text">
-                    <h6>$35,00</h6>
-                    <p>Black and White Stripes Dress</p>
-                </div>
-            </div>
-            <div class="product-item">
-                <div class="pi-pic">
-                    <img src="~/images/product/3.jpg" alt="">
-                    <div class="pi-links">
-                        <a href="#" class="add-card"><i class="flaticon-bag"></i><span>ADD TO CART</span></a>
-                        <a href="#" class="wishlist-btn"><i class="flaticon-heart"></i></a>
-                    </div>
-                </div>
-                <div class="pi-text">
-                    <h6>$35,00</h6>
-                    <p>Flamboyant Pink Top </p>
-                </div>
-            </div>
-            <div class="product-item">
-                <div class="pi-pic">
-                    <img src="~/images/product/4.jpg" alt="">
-                    <div class="pi-links">
-                        <a href="#" class="add-card"><i class="flaticon-bag"></i><span>ADD TO CART</span></a>
-                        <a href="#" class="wishlist-btn"><i class="flaticon-heart"></i></a>
-                    </div>
-                </div>
-                <div class="pi-text">
-                    <h6>$35,00</h6>
-                    <p>Flamboyant Pink Top </p>
-                </div>
-            </div>
-            <div class="product-item">
-                <div class="pi-pic">
-                    <img src="~/images/product/6.jpg" alt="">
-                    <div class="pi-links">
-                        <a href="#" class="add-card"><i class="flaticon-bag"></i><span>ADD TO CART</span></a>
-                        <a href="#" class="wishlist-btn"><i class="flaticon-heart"></i></a>
-                    </div>
-                </div>
-                <div class="pi-text">
-                    <h6>$35,00</h6>
-                    <p>Flamboyant Pink Top </p>
-                </div>
-            </div>
+            }
         </div>
-    </div>
+            </div>
 </section>
 <!-- letest product section end -->
+
 @*<div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="6000">
         <ol class="carousel-indicators">
             <li data-target="#myCarousel" data-slide-to="0" class="active"></li>

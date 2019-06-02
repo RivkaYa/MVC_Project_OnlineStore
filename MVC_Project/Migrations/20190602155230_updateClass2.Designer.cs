@@ -11,9 +11,10 @@ using System;
 namespace MVC_Project.Migrations
 {
     [DbContext(typeof(DataStoreContext))]
-    partial class DataStoreContextModelSnapshot : ModelSnapshot
+    [Migration("20190602155230_updateClass2")]
+    partial class updateClass2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

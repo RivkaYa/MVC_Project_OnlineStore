@@ -8,7 +8,7 @@ namespace MVC_Project.Models
 {
     public class Cart
     {
-        public int id { get; set; }
+        public int Id { get; set; }
         public Product ProdId { get; set; }
         public ProductSize ItemSize { get; set; }
         public ProductColor ItemColor { get; set; }
