@@ -122,7 +122,8 @@ namespace MVC_Project.Controllers
                 await _context.SaveChangesAsync();
                 //return RedirectToAction(nameof(Index));
                 var createdProd= _context.Product.LastOrDefault();
-                return RedirectToAction("CreateSpesificQuantity", controllerName: "ProductsQuantities", routeValues:createdProd.Id);
+                //return RedirectToAction("CreateSpesificQuantity", "ProductsQuantities", createdProd.Id);
+                return RedirectToAction("Create", "ProductsQuantities");
             }
             return View(product);
         }
