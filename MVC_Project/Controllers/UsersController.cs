@@ -147,6 +147,15 @@ namespace MVC_Project.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+
+
+
+        public async Task<IActionResult> Login()
+        {
+            
+            return View();
+        }
+
         private bool UserExists(int id)
         {
             return _context.User.Any(e => e.Id == id);

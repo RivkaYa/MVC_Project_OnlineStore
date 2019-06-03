@@ -1,0 +1,19 @@
+﻿@model MVC_Project.Models.User
+
+@{
+    ViewData["Title"] = "Login";
+}
+<head>
+    <!-- MATERIAL DESIGN ICONIC FONT -->
+    <link href="~/fonts/material-design-iconic-font/css/material-design-iconic-font.min.css" rel="stylesheet" />
+    <link href="~/fonts/material-design-iconic-font/css/material-design-iconic-font.css" rel="stylesheet" />
+    
+    <!-- STYLE CSS -->
+    <link href="~/css/Registration/style.css" rel="stylesheet" />
+</head>
+<hr />
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

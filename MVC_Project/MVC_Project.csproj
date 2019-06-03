@@ -36,6 +36,9 @@
     <Content Update="Views\Products\Index.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
+    <Content Update="Views\Users\Login.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
     <Content Update="Views\Users\_LayoutBackup.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
