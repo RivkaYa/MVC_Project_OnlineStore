@@ -21,6 +21,23 @@ namespace MVC_Project.Controllers
         // GET: ProductsQuantities
         public async Task<IActionResult> Index()
         {
+            //Colors
+            var colorQ = from s in _context.ProductColor
+                         select new { Value = s.Id, Text = s.Color };
+
+            ViewData["ColorId"] = new SelectList(await colorQ.ToListAsync(), "Value", "Text");
+
+            //sizes
+            var sizeQ = from size in _context.ProductSize
+                        select new { Value = size.Id, Text = size.Size };
+            ViewData["SizeId"] = new SelectList(await sizeQ.ToListAsync(), "Value", "Text");
+
+
+            //products
+            var productQ = from product in _context.Product
+                           select new { Value = product.Id, Text = product.Name };
+            ViewData["ProdId"] = new SelectList(await productQ.ToListAsync(), "Value", "Text");
+
             var dataStoreContext = _context.ProductsQuantity.Include(p => p.Product).Include(p => p.ProductColor).Include(p => p.ProductSize);
             return View(await dataStoreContext.ToListAsync());
         }
@@ -47,11 +64,28 @@ namespace MVC_Project.Controllers
         }
 
         // GET: ProductsQuantities/Create
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
-            ViewData["ProdId"] = new SelectList(_context.Product, "Id", "Id");
-            ViewData["ColorId"] = new SelectList(_context.ProductColor, "Id", "Id");
-            ViewData["SizeId"] = new SelectList(_context.ProductSize, "Id", "Id");
+            //Colors
+            var colorQ = from s in _context.ProductColor
+                         select new { Value = s.Id, Text = s.Color };
+
+            ViewData["ColorId"] = new SelectList(await colorQ.ToListAsync(), "Value", "Text");
+
+            //sizes
+            var sizeQ = from size in _context.ProductSize
+                        select new { Value = size.Id, Text = size.Size };
+            ViewData["SizeId"] = new SelectList(await sizeQ.ToListAsync(), "Value", "Text");
+
+
+            //products
+            var productQ = from product in _context.Product
+                           select new { Value = product.Id, Text = product.Name };
+            ViewData["ProdId"] = new SelectList(await productQ.ToListAsync(), "Value", "Text");
+
+            //ViewData["ProdId"] = new SelectList(_context.Product, "Id", _context.Product.Select(x=>x.Name).ToString());
+            //ViewData["ColorId"] = new SelectList(_context.ProductColor, "Id", "Id");
+            //ViewData["SizeId"] = new SelectList(_context.ProductSize, "Id", "Id");
             return View();
         }
 
