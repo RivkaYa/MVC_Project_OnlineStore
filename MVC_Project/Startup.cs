@@ -51,7 +51,7 @@ namespace MVC_Project
                     //template: "{controller=Home}/{action=Index}/{id?}");
                     //template: "{controller=Users}/{action=Create}/{id?}");
                     //template: "{controller=Home}/{action=Index}/{id?}");
-                    template: "{controller=Products}/{action=Create}/{id?}");
+                    template: "{controller=Products}/{action=Index}/{id?}");
             });
         }
     }

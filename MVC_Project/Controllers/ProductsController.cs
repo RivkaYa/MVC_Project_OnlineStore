@@ -21,13 +21,8 @@ namespace MVC_Project.Controllers
         }
 
         // GET: Products
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string searchBox)
         {
-            //var databaseContext = _context.Product.Include(x => x.Quantity).Include(x=>x.Category);
-            //var databaseContextWithImages = _context.Product.Include(x => x.Images);
-
-            //var productsListOriginal = _context.Product.ToListAsync();
-
             //sizes
             var sizeQ =  from size in _context.ProductSize 
                          select new { Value = size.Id, Text = size.Size };
@@ -39,10 +34,35 @@ namespace MVC_Project.Controllers
 
             ViewData["Category"] = new SelectList(await categoryQ.ToListAsync(), "Value", "Text");
             var a = _context.Product.ToList();
-            var productsList = _context.Product.Include(x=>x.Images).Where(x=>x.Images.Count>0).Include(y=>y.Quantity).ToListAsync();
-            
+
+
+            var productsList = _context.Product.Include(x => x.Images).Where(x => x.Images.Count > 0).Include(y => y.Quantity).ToListAsync();
+            if(!String.IsNullOrEmpty(searchBox))
+            {
+                productsList = _context.Product.Where(s => s.Name.ToLower().Contains(searchBox.ToLower()) || s.Description.ToLower().Contains(searchBox.ToLower())).ToListAsync();
+            }
+
+
             return View(await productsList);
         }
+
+        public async Task<PartialViewResult> IndexPartial(string searchBox)
+        {
+            var productsList = _context.Product.Include(x => x.Images).Where(x => x.Images.Count > 0).Include(y => y.Quantity).ToListAsync();
+            if (!String.IsNullOrEmpty(searchBox))
+            {
+                productsList = _context.Product.Where(s => s.Name.ToLower().Contains(searchBox.ToLower()) || s.Description.ToLower().Contains(searchBox.ToLower())).ToListAsync();
+            }
+            return PartialView(await productsList);
+        }
+
+
+        //public async Task<PartialViewResult> Index(Task<List<Product>> products)
+        //{
+        //    Task<List<Product>> filteredProducts = products.AsQueryable().ToListAsync();
+        //    return PartialView(await filteredProducts);
+        //}
+
 
         // GET: Products/Details/5
         public async Task<IActionResult> Details(int? id)
@@ -218,8 +238,18 @@ namespace MVC_Project.Controllers
         }
 
 
+        public async Task<PartialViewResult> Search(string searchBox)
+        {
+            Task<List<Product>> filteredItems = _context.Product.Where(s => s.Name.ToLower().Contains(searchBox.ToLower()) || s.Description.ToLower().Contains(searchBox.ToLower())).ToListAsync();
+            return PartialView("Index",await filteredItems);
 
+            //return Index(await );
 
+            //if (searchBox != null)
+            //    return Index(await _context.Product.Where(s => s.Name.ToLower().Contains(searchBox.ToLower()) || s.Description.ToLower().Contains(searchBox.ToLower())).ToListAsync());
+            //    //return Json(await _context.Product.Where(s => s.Name.ToLower().Contains(searchBox.ToLower()) || s.Description.ToLower().Contains(searchBox.ToLower())).ToListAsync());
+            //return Json(await _context.Product.ToListAsync());
+        }
 
         #region DB queries
         private bool ProductExists(int id)

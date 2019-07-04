@@ -1,0 +1,50 @@
+﻿@model IEnumerable<MVC_Project.Models.Product>
+
+@{
+    ViewData["Title"] = "Index";
+}
+<!-- Stylesheets -->
+<link href="~/css/animate.css" rel="stylesheet" />
+<link href="~/css/bootstrap.min.css" rel="stylesheet" />
+<link href="~/css/flaticon.css" rel="stylesheet" />
+<link href="~/css/font-awesome.min.css" rel="stylesheet" />
+<link href="~/css/jquery-ui.min.css" rel="stylesheet" />
+<link href="~/css/owl.carousel.min.css" rel="stylesheet" />
+<link href="~/css/site.css" rel="stylesheet" />
+<link href="~/css/site.min.css" rel="stylesheet" />
+<link href="~/css/slicknav.min.css" rel="stylesheet" />
+<link href="~/css/style.css" rel="stylesheet" />
+
+@*<section id="Product" class="col-md-9">*@
+
+    @*CardsSection:*@
+    <div class="col-lg-9  order-1 order-lg-2 mb-5 mb-lg-0">
+        <div class="row">
+            @foreach (var product in Model)
+            {
+                <div class="col-lg-4 col-sm-6">
+                    <div class="product-item">
+                        <div class="pi-pic">
+                            <div class="tag-sale">ON SALE</div>
+                            <a asp-action="Details" asp-route-id="@product.Id">
+                                <img asp-action="Details" asp-route-id="@product.Id" src="~/images/Products/@product.Images[0].ImgSrc" alt="">
+                            </a> |
+                            <div class="pi-links">
+                                <a asp-action="Details" asp-route-id="@product.Id" class="add-card"><i class="flaticon-bag"></i><span>ADD TO CART</span></a>
+                                <a href="#" class="wishlist-btn"><i class="flaticon-heart"></i></a>
+                            </div>
+                        </div>
+                        <div class="pi-text">
+                            <h6> $@product.Price</h6>
+                            <p>@product.Name</p>
+                        </div>
+                    </div>
+                </div>
+            }
+            <div class="text-center w-100 pt-3">
+                <button class="site-btn sb-line sb-dark">LOAD MORE</button>
+            </div>
+        </div>
+    </div>
+@*</section>*@
+<!-- Category section end -->
