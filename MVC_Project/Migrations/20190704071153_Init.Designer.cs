@@ -11,8 +11,8 @@ using System;
 namespace MVC_Project.Migrations
 {
     [DbContext(typeof(DataStoreContext))]
-    [Migration("20190528223632_addPassField")]
-    partial class addPassField
+    [Migration("20190704071153_Init")]
+    partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -95,13 +95,15 @@ namespace MVC_Project.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<int?>("CategoryId");
+                    b.Property<int>("CategoryId");
 
                     b.Property<DateTime>("CreatedAt");
 
                     b.Property<string>("Description");
 
                     b.Property<double>("DiscountPct");
+
+                    b.Property<string>("Img");
 
                     b.Property<bool>("IsTradable");
 
@@ -197,6 +199,8 @@ namespace MVC_Project.Migrations
 
                     b.Property<DateTime>("CreatedAt");
 
+                    b.Property<string>("Email");
+
                     b.Property<string>("FirstName");
 
                     b.Property<string>("LastName");
@@ -252,7 +256,8 @@ namespace MVC_Project.Migrations
                 {
                     b.HasOne("MVC_Project.Models.ProductCategory", "Category")
                         .WithMany("ProductsList")
-                        .HasForeignKey("CategoryId");
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("MVC_Project.Models.ProductsImages", b =>

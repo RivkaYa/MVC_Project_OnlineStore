@@ -102,6 +102,8 @@ namespace MVC_Project.Migrations
 
                     b.Property<double>("DiscountPct");
 
+                    b.Property<string>("Img");
+
                     b.Property<bool>("IsTradable");
 
                     b.Property<string>("Name");

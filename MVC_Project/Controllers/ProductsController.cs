@@ -38,7 +38,7 @@ namespace MVC_Project.Controllers
                     select new { Value = s.Id, Text = s.CategoryName };
 
             ViewData["Category"] = new SelectList(await categoryQ.ToListAsync(), "Value", "Text");
-
+            var a = _context.Product.ToList();
             var productsList = _context.Product.Include(x=>x.Images).Where(x=>x.Images.Count>0).Include(y=>y.Quantity).ToListAsync();
             
             return View(await productsList);

@@ -14,8 +14,6 @@ namespace MVC_Project.Models
         public string Description { get; set; }
         public double Price { get; set; }
         public double DiscountPct { get; set; } = 0;
-       // public int CategoryId { get; set; }
-
         public int CategoryId{ get; set; }
         public ProductCategory Category{ get; set; }
         public bool IsTradable { get; set; }
@@ -23,5 +21,6 @@ namespace MVC_Project.Models
         public List<ProductsQuantity> Quantity { get; set; }
         public List<OrdersHistoryProductsList> Orders { get; set; }
         public List<ProductsImages> Images { get; set; }
+        public string Img { get; set; }
     }
 }
