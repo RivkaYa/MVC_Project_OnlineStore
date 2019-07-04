@@ -35,6 +35,7 @@ namespace MVC_Project.Controllers
 
             //products
             var productQ = from product in _context.Product
+                           orderby product.CreatedAt descending
                            select new { Value = product.Id, Text = product.Name };
             ViewData["ProdId"] = new SelectList(await productQ.ToListAsync(), "Value", "Text");
 
@@ -80,6 +81,7 @@ namespace MVC_Project.Controllers
 
             //products
             var productQ = from product in _context.Product
+                           orderby product.CreatedAt descending
                            select new { Value = product.Id, Text = product.Name };
             ViewData["ProdId"] = new SelectList(await productQ.ToListAsync(), "Value", "Text");
 

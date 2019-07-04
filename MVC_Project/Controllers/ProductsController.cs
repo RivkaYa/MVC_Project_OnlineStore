@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using MVC_Project.Models;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace MVC_Project.Controllers
 {
@@ -108,7 +109,8 @@ namespace MVC_Project.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("CategoryId,Id,Name,Description,Price,IsTradable,CreatedAt")] Product product)
+        //public async Task<IActionResult> Create([Bind("CategoryId,Id,Name,Description,Price,IsTradable,CreatedAt,Images")] Product product,Image image)
+        public async Task<IActionResult> Create([Bind("CategoryId,Id,Name,Description,Price,IsTradable,CreatedAt,Images")] Product product)
         {
             if (ModelState.IsValid)
             {

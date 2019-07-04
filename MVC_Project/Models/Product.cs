@@ -23,6 +23,5 @@ namespace MVC_Project.Models
         public List<ProductsQuantity> Quantity { get; set; }
         public List<OrdersHistoryProductsList> Orders { get; set; }
         public List<ProductsImages> Images { get; set; }
-
     }
 }
