@@ -38,10 +38,23 @@ namespace MVC_Project.Controllers
             return View(await productsList);
         }
 
-        public async Task<PartialViewResult> IndexPartial(string searchBox)
+        public async Task<PartialViewResult> IndexPartial(string searchBox, int? categoryID)
         {
+            var list = _context.Product.Include(x => x.Images).Where(x => x.Images.Count > 0).Include(y => y.Quantity);
+            if(!String.IsNullOrEmpty(searchBox))
+            {
+                list = list.Where(s => s.Name.ToLower().Contains(searchBox.ToLower()) || s.Description.ToLower().Contains(searchBox.ToLower())).Include(x => x.Images).Where(x => x.Images.Count > 0).Include(y => y.Quantity);
+            }
+
             var productsList = GetProductSearchResults(searchBox);
-            return PartialView(await productsList);
+            if(categoryID!=null && categoryID!=0)
+            {
+                list =  list.Where(x => x.CategoryId == categoryID.Value).Include(x => x.Images).Where(x => x.Images.Count > 0).Include(y => y.Quantity);
+                //productsList = productsList.Result.Where(x => x.CategoryId == categoryID.Value).ToList().AsQueryable().ToListAsync();
+            }
+
+            var qList = list.Include(x => x.Images).Where(x => x.Images.Count > 0).Include(y => y.Quantity).ToListAsync();
+            return PartialView(await list.ToListAsync());
         }
 
         private Task<List<Product>> GetProductSearchResults(string text)
