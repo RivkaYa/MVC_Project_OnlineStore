@@ -33,36 +33,27 @@ namespace MVC_Project.Controllers
                     select new { Value = s.Id, Text = s.CategoryName };
 
             ViewData["Category"] = new SelectList(await categoryQ.ToListAsync(), "Value", "Text");
-            var a = _context.Product.ToList();
 
-
-            var productsList = _context.Product.Include(x => x.Images).Where(x => x.Images.Count > 0).Include(y => y.Quantity).ToListAsync();
-            if(!String.IsNullOrEmpty(searchBox))
-            {
-                productsList = _context.Product.Where(s => s.Name.ToLower().Contains(searchBox.ToLower()) || s.Description.ToLower().Contains(searchBox.ToLower())).ToListAsync();
-            }
-
-
+            var productsList = GetProductSearchResults(searchBox);
             return View(await productsList);
         }
 
         public async Task<PartialViewResult> IndexPartial(string searchBox)
         {
-            var productsList = _context.Product.Include(x => x.Images).Where(x => x.Images.Count > 0).Include(y => y.Quantity).ToListAsync();
-            if (!String.IsNullOrEmpty(searchBox))
-            {
-                productsList = _context.Product.Where(s => s.Name.ToLower().Contains(searchBox.ToLower()) || s.Description.ToLower().Contains(searchBox.ToLower())).ToListAsync();
-            }
+            var productsList = GetProductSearchResults(searchBox);
             return PartialView(await productsList);
         }
 
+        private Task<List<Product>> GetProductSearchResults(string text)
+        {
+            var productsList = _context.Product.Include(x => x.Images).Where(x => x.Images.Count > 0).Include(y => y.Quantity).ToListAsync();
+            if (!String.IsNullOrEmpty(text))
+            {
+                productsList = _context.Product.Where(s => s.Name.ToLower().Contains(text.ToLower()) || s.Description.ToLower().Contains(text.ToLower())).ToListAsync();
+            }
+            return productsList;
 
-        //public async Task<PartialViewResult> Index(Task<List<Product>> products)
-        //{
-        //    Task<List<Product>> filteredProducts = products.AsQueryable().ToListAsync();
-        //    return PartialView(await filteredProducts);
-        //}
-
+        }
 
         // GET: Products/Details/5
         public async Task<IActionResult> Details(int? id)

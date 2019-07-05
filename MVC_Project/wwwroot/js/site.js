@@ -2,7 +2,8 @@
 //הצגת מוצרים לפי שם מוצר מסוים בעת הקלדה
 $("#searchBox").keyup(function () {
     var form = $('#searchForm')
-    var url = form.attr('action')
+    //var url = form.attr('action')
+     var url = '/Products/IndexPartial'
     $.ajax({
         url: url,
         data: form.serialize(),
@@ -15,6 +16,24 @@ $("#searchBox").keyup(function () {
         }
     });
 });
+
+////var check = 0;
+////צריכה לשנות ששתיהם ילכו לטבלת connect   כי אחרת אין קשר ביניהם.
+//$('input[value=color]').change(function () {
+//    if ($(this).prop("checked")) {
+//        //do the stuff that you would do when 'checked'
+//        var colorid = $(this).attr("id")
+//        $.ajax({
+//            url: "Colors/Search?id" + colorid,
+//            method: "post",
+//            async: false,
+//            data: { colorid: colorid },
+//            success: function (data) {
+//                $("#Product").html(data)
+//            }
+//        });
+//        return;
+//    }
 
 //$.ajax({
 //    url: "Colors/Search?id" + colorid,
