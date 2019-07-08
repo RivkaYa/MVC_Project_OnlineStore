@@ -33,21 +33,21 @@
                         <div>
                             @*<form id="searchForm" asp-action="IndexPartial" asp-controller="Products" class="header-search-form">*@
                             @*<form id="searchForm" class="header-search-form">*@
-                                <input type="text" name="searchBox" id="searchBox" placeholder="Search product..">
-                                <button><i class="flaticon-search"></i></button>
+                            <input type="text" name="searchBox" id="searchBox" placeholder="Search product..">
+                            <button><i class="flaticon-search"></i></button>
                             @*</form>*@
                         </div>
 
                     </div>
                     <!-- #endregion -->
-                    <!-- #region CaeteforiesFilter -->
+                    <!-- #region CaetegoriesFilter -->
                     <div class="filter-widget">
                         <h2 class="fw-title">Categories</h2>
-                        <ul id="="category-menu" class="category-menu">
+                        <ul id="=" category-menu" class="category-menu">
                             <li>  <a href="#">All</a></li>
                             @foreach (var item in ViewBag.Category)
                             {
-                                <li  name="Category-@item.Text" id="Category-@item.Text" value="@item.Value">  <a> @item.Text</a></li>
+                                <li name="Category-@item.Text" id="Category-@item.Text" value="@item.Value">  <a> @item.Text</a></li>
                             }
                         </ul>
                     </div>
@@ -130,9 +130,9 @@
                         </div>
                     </div>
                     <!-- #endregion -->
-            
-                  </form>  
-                    </div>
+
+                </form>
+            </div>
 
             <!-- #region ProductCards -->
             <section id="Product" class="col-md-9">
@@ -212,3 +212,16 @@
         }
     </tbody>
 </table>
+
+@section Scripts{
+    <script src="~/js/jquery-ui.min.js"></script>
+    <script src="~/js/bootstrap.min.js"></script>
+    <script src="~/js/jquery.nicescroll.min.js"></script>
+    <script src="~/js/jquery.slicknav.min.js"></script>
+    <script src="~/js/jquery.zoom.min.js"></script>
+    <script src="~/js/jquery-3.2.1.min.js"></script>
+    <script src="~/js/main.js"></script>
+    <script src="~/js/owl.carousel.min.js"></script>
+    <script src="~/js/site.js"></script>
+    <script src="~/js/site.min.js"></script>
+}
