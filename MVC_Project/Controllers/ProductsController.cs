@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using MVC_Project.Models;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace MVC_Project.Controllers
 {
@@ -20,13 +21,8 @@ namespace MVC_Project.Controllers
         }
 
         // GET: Products
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string searchBox)
         {
-            //var databaseContext = _context.Product.Include(x => x.Quantity).Include(x=>x.Category);
-            //var databaseContextWithImages = _context.Product.Include(x => x.Images);
-
-            //var productsListOriginal = _context.Product.ToListAsync();
-
             //sizes
             var sizeQ =  from size in _context.ProductSize 
                          select new { Value = size.Id, Text = size.Size };
@@ -38,9 +34,39 @@ namespace MVC_Project.Controllers
 
             ViewData["Category"] = new SelectList(await categoryQ.ToListAsync(), "Value", "Text");
 
-            var productsList = _context.Product.Include(x=>x.Images).Where(x=>x.Images.Count>0).Include(y=>y.Quantity).ToListAsync();
-            
+            var productsList = GetProductSearchResults(searchBox);
             return View(await productsList);
+        }
+
+        public async Task<PartialViewResult> IndexPartial(string searchBox, int? categoryID)
+        {
+            var list = _context.Product.Include(x => x.Images).Where(x => x.Images.Count > 0).Include(y => y.Quantity);
+
+            if (!String.IsNullOrEmpty(searchBox))
+            {
+                list = list.Where(s => s.Name.ToLower().Contains(searchBox.ToLower()) || s.Description.ToLower().Contains(searchBox.ToLower())).Include(x => x.Images).Where(x => x.Images.Count > 0).Include(y => y.Quantity);
+            }
+
+            //var productsList = GetProductSearchResults(searchBox);
+            if(categoryID!=null && categoryID!=0)
+            {
+                list =  list.Where(x => x.CategoryId == categoryID.Value).Include(x => x.Images).Where(x => x.Images.Count > 0).Include(y => y.Quantity);
+                //productsList = productsList.Result.Where(x => x.CategoryId == categoryID.Value).ToList().AsQueryable().ToListAsync();
+            }
+
+
+            return PartialView(await list.ToListAsync());
+        }
+
+        private Task<List<Product>> GetProductSearchResults(string text)
+        {
+            var productsList = _context.Product.Include(x => x.Images).Where(x => x.Images.Count > 0).Include(y => y.Quantity).ToListAsync();
+            if (!String.IsNullOrEmpty(text))
+            {
+                productsList = _context.Product.Where(s => s.Name.ToLower().Contains(text.ToLower()) || s.Description.ToLower().Contains(text.ToLower())).ToListAsync();
+            }
+            return productsList;
+
         }
 
         // GET: Products/Details/5
@@ -108,7 +134,8 @@ namespace MVC_Project.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("CategoryId,Id,Name,Description,Price,IsTradable,CreatedAt")] Product product)
+        //public async Task<IActionResult> Create([Bind("CategoryId,Id,Name,Description,Price,IsTradable,CreatedAt,Images")] Product product,Image image)
+        public async Task<IActionResult> Create([Bind("CategoryId,Id,Name,Description,Price,IsTradable,CreatedAt,Images")] Product product)
         {
             if (ModelState.IsValid)
             {
@@ -216,8 +243,18 @@ namespace MVC_Project.Controllers
         }
 
 
+        public async Task<PartialViewResult> Search(string searchBox)
+        {
+            Task<List<Product>> filteredItems = _context.Product.Where(s => s.Name.ToLower().Contains(searchBox.ToLower()) || s.Description.ToLower().Contains(searchBox.ToLower())).ToListAsync();
+            return PartialView("Index",await filteredItems);
 
+            //return Index(await );
 
+            //if (searchBox != null)
+            //    return Index(await _context.Product.Where(s => s.Name.ToLower().Contains(searchBox.ToLower()) || s.Description.ToLower().Contains(searchBox.ToLower())).ToListAsync());
+            //    //return Json(await _context.Product.Where(s => s.Name.ToLower().Contains(searchBox.ToLower()) || s.Description.ToLower().Contains(searchBox.ToLower())).ToListAsync());
+            //return Json(await _context.Product.ToListAsync());
+        }
 
         #region DB queries
         private bool ProductExists(int id)
