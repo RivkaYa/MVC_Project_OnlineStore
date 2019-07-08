@@ -14,7 +14,6 @@ namespace MVC_Project.Models
         public string Description { get; set; }
         public double Price { get; set; }
         public double DiscountPct { get; set; } = 0;
-       // public int CategoryId { get; set; }
 
         public int CategoryId{ get; set; }
         public ProductCategory Category{ get; set; }

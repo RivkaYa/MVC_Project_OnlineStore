@@ -6,6 +6,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Controllers\aboutUsController.cs" />
+    <Compile Remove="Controllers\uController1.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="Views\Home\bg-2.jpg" />
     <None Remove="Views\Home\bg.jpg" />
     <None Remove="Views\Users\bg-registration-form-1.jpg" />
@@ -25,6 +30,10 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.9" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.2.4">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.0.4" />
   </ItemGroup>
 

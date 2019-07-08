@@ -1,11 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
-using System;
-using System.Collections.Generic;
 
 namespace MVC_Project.Migrations
 {
-    public partial class Init : Migration
+    public partial class init1 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -15,13 +14,26 @@ namespace MVC_Project.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Street = table.Column<string>(nullable: true),
                     BuildNumber = table.Column<int>(nullable: false),
-                    City = table.Column<string>(nullable: true),
-                    Street = table.Column<string>(nullable: true)
+                    City = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Address", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "OrderStatus",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Status = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_OrderStatus", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -70,14 +82,16 @@ namespace MVC_Project.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    AddressId = table.Column<int>(nullable: true),
-                    CreatedAt = table.Column<DateTime>(nullable: false),
+                    NickName = table.Column<string>(nullable: true),
                     FirstName = table.Column<string>(nullable: true),
                     LastName = table.Column<string>(nullable: true),
-                    NickName = table.Column<string>(nullable: true),
+                    UserType = table.Column<int>(nullable: false),
+                    AddressId = table.Column<int>(nullable: true),
                     PhoneNumber = table.Column<double>(nullable: false),
+                    CreatedAt = table.Column<DateTime>(nullable: false),
                     UpdatedAt = table.Column<DateTime>(nullable: false),
-                    UserType = table.Column<int>(nullable: false)
+                    Email = table.Column<string>(nullable: true),
+                    Password = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -91,17 +105,39 @@ namespace MVC_Project.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "OrdersHistory",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    UserId = table.Column<int>(nullable: false),
+                    OrderDate = table.Column<DateTime>(nullable: false),
+                    OrderStatusId = table.Column<int>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_OrdersHistory", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_OrdersHistory_OrderStatus_OrderStatusId",
+                        column: x => x.OrderStatusId,
+                        principalTable: "OrderStatus",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Product",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    CategoryId = table.Column<int>(nullable: true),
-                    CreatedAt = table.Column<DateTime>(nullable: false),
-                    Description = table.Column<string>(nullable: true),
                     Name = table.Column<string>(nullable: true),
+                    Description = table.Column<string>(nullable: true),
                     Price = table.Column<double>(nullable: false),
-                    IsTradable = table.Column<bool>(nullable: false)
+                    DiscountPct = table.Column<double>(nullable: false),
+                    CategoryId = table.Column<int>(nullable: false),
+                    IsTradable = table.Column<bool>(nullable: false),
+                    CreatedAt = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -111,7 +147,71 @@ namespace MVC_Project.Migrations
                         column: x => x.CategoryId,
                         principalTable: "ProductCategory",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "OrdersHistoryProductsList",
+                columns: table => new
+                {
+                    OrderId = table.Column<int>(nullable: false),
+                    ProdId = table.Column<int>(nullable: false),
+                    SizeId = table.Column<int>(nullable: false),
+                    ColorId = table.Column<int>(nullable: false),
+                    Quantity = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_OrdersHistoryProductsList", x => new { x.OrderId, x.ProdId, x.ColorId, x.SizeId });
+                    table.ForeignKey(
+                        name: "FK_OrdersHistoryProductsList_ProductColor_ColorId",
+                        column: x => x.ColorId,
+                        principalTable: "ProductColor",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_OrdersHistoryProductsList_OrdersHistory_OrderId",
+                        column: x => x.OrderId,
+                        principalTable: "OrdersHistory",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_OrdersHistoryProductsList_Product_ProdId",
+                        column: x => x.ProdId,
+                        principalTable: "Product",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_OrdersHistoryProductsList_ProductSize_SizeId",
+                        column: x => x.SizeId,
+                        principalTable: "ProductSize",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ProductsImages",
+                columns: table => new
+                {
+                    ProdId = table.Column<int>(nullable: false),
+                    ColorId = table.Column<int>(nullable: false),
+                    ImgSrc = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ProductsImages", x => new { x.ProdId, x.ColorId });
+                    table.ForeignKey(
+                        name: "FK_ProductsImages_ProductColor_ColorId",
+                        column: x => x.ColorId,
+                        principalTable: "ProductColor",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ProductsImages_Product_ProdId",
+                        column: x => x.ProdId,
+                        principalTable: "Product",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -119,8 +219,8 @@ namespace MVC_Project.Migrations
                 columns: table => new
                 {
                     ProdId = table.Column<int>(nullable: false),
-                    ColorId = table.Column<int>(nullable: false),
                     SizeId = table.Column<int>(nullable: false),
+                    ColorId = table.Column<int>(nullable: false),
                     Quantity = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
@@ -147,9 +247,34 @@ namespace MVC_Project.Migrations
                 });
 
             migrationBuilder.CreateIndex(
+                name: "IX_OrdersHistory_OrderStatusId",
+                table: "OrdersHistory",
+                column: "OrderStatusId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_OrdersHistoryProductsList_ColorId",
+                table: "OrdersHistoryProductsList",
+                column: "ColorId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_OrdersHistoryProductsList_ProdId",
+                table: "OrdersHistoryProductsList",
+                column: "ProdId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_OrdersHistoryProductsList_SizeId",
+                table: "OrdersHistoryProductsList",
+                column: "SizeId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Product_CategoryId",
                 table: "Product",
                 column: "CategoryId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ProductsImages_ColorId",
+                table: "ProductsImages",
+                column: "ColorId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ProductsQuantity_ColorId",
@@ -170,10 +295,19 @@ namespace MVC_Project.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "OrdersHistoryProductsList");
+
+            migrationBuilder.DropTable(
+                name: "ProductsImages");
+
+            migrationBuilder.DropTable(
                 name: "ProductsQuantity");
 
             migrationBuilder.DropTable(
                 name: "User");
+
+            migrationBuilder.DropTable(
+                name: "OrdersHistory");
 
             migrationBuilder.DropTable(
                 name: "ProductColor");
@@ -186,6 +320,9 @@ namespace MVC_Project.Migrations
 
             migrationBuilder.DropTable(
                 name: "Address");
+
+            migrationBuilder.DropTable(
+                name: "OrderStatus");
 
             migrationBuilder.DropTable(
                 name: "ProductCategory");

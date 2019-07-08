@@ -1,10 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
-using System;
-using System.Collections.Generic;
 
 namespace MVC_Project.Migrations
 {
-    public partial class init55 : Migration
+    public partial class SH : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
