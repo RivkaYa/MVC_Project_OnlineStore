@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -12,6 +13,7 @@ namespace MVC_Project.Controllers
     public class CartsController : Controller
     {
         private readonly DataStoreContext _context;
+        private object productModel;
 
         public CartsController(DataStoreContext context)
         {
@@ -53,8 +55,11 @@ namespace MVC_Project.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id")] Cart cart)
+        public async Task<IActionResult> Create([Bind("Id, Customer")] Cart cart)
         {
+
+         
+
             if (ModelState.IsValid)
             {
                 _context.Add(cart);
@@ -65,13 +70,42 @@ namespace MVC_Project.Controllers
         }
 
         // GET: Carts/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public async Task<IActionResult> Edit(ProductsQuantity product)
         {
+            // if anyone login
+            if (HttpContext.Session.GetString("userSession") is null)
+            {
+                int a = 5;// TODO: messege first login in....
+                          
+            }
+            // if to this user already have a cart
+            else
+            {
+                var result = from u in _context.User
+                where u.Email == HttpContext.Session.GetString("userSession")
+                             select u;
+
+               var s =  result.GetType();
+                //(User)result.cart = new Cart();
+                var a = new SelectList(await result.ToListAsync(), "Value", "Text");
+
+
+            }
+            //// create new cart
+            //else
+            //{
+            //    var curCart = new Cart();
+            //    curCart.productList = new List<ProductsQuantity>();
+            //    var proudctDetails = new ProductsQuantity();
+            //    curCart.productList.Add(proudctDetails);
+            //}
+
+            var id = 5;
             if (id == null)
             {
                 return NotFound();
             }
-
+           
             var cart = await _context.Cart.SingleOrDefaultAsync(m => m.Id == id);
             if (cart == null)
             {
@@ -148,5 +182,8 @@ namespace MVC_Project.Controllers
         {
             return _context.Cart.Any(e => e.Id == id);
         }
+
+
+      
     }
 }

@@ -24,5 +24,8 @@ namespace MVC_Project.Models
         public DateTime UpdatedAt { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }
+        public Cart cart { get; set; }
+
+
     }
 }

@@ -15,5 +15,6 @@ namespace MVC_Project.Models
         public int Id { get; set; }
         public string CategoryName { get; set; }
         public List<Product> ProductsList { get; set; }
+
     }
 }

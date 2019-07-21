@@ -25,6 +25,9 @@ namespace MVC_Project
         {
             services.AddMvc();
 
+            services.AddDistributedMemoryCache();
+            services.AddSession();
+
             services.AddDbContext<DataStoreContext>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("DataStoreContext")));
         }
@@ -43,6 +46,8 @@ namespace MVC_Project
             }
 
             app.UseStaticFiles();
+
+            app.UseSession();
 
             app.UseMvc(routes =>
             {

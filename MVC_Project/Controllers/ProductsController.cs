@@ -206,6 +206,33 @@ namespace MVC_Project.Controllers
             return View(product);
         }
 
+        // להעביר למקשרת
+        //public async Task<IActionResult> AddToCart(int idProduct)
+        //{
+        //    return ;
+        //}
+
+        
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> AddToCart([Bind("Id,Price,Quantity")] ProductsQuantity product)
+        {
+            return RedirectToAction("Edit", "Carts",  product );
+        }
+
+        public async Task<PartialViewResult> Search(string searchBox)
+        {
+            Task<List<Product>> filteredItems = _context.Product.Where(s => s.Name.ToLower().Contains(searchBox.ToLower()) || s.Description.ToLower().Contains(searchBox.ToLower())).ToListAsync();
+            return PartialView("Index",await filteredItems);
+
+            //return Index(await );
+
+            //if (searchBox != null)
+            //    return Index(await _context.Product.Where(s => s.Name.ToLower().Contains(searchBox.ToLower()) || s.Description.ToLower().Contains(searchBox.ToLower())).ToListAsync());
+            //    //return Json(await _context.Product.Where(s => s.Name.ToLower().Contains(searchBox.ToLower()) || s.Description.ToLower().Contains(searchBox.ToLower())).ToListAsync());
+            //return Json(await _context.Product.ToListAsync());
+        }
+
         // GET: Products/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
@@ -234,26 +261,6 @@ namespace MVC_Project.Controllers
             _context.Product.Remove(product);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
-        }
-
-        public void AddToCart(int productId, int size, int quantity, int color)
-        {
-            
-
-        }
-
-
-        public async Task<PartialViewResult> Search(string searchBox)
-        {
-            Task<List<Product>> filteredItems = _context.Product.Where(s => s.Name.ToLower().Contains(searchBox.ToLower()) || s.Description.ToLower().Contains(searchBox.ToLower())).ToListAsync();
-            return PartialView("Index",await filteredItems);
-
-            //return Index(await );
-
-            //if (searchBox != null)
-            //    return Index(await _context.Product.Where(s => s.Name.ToLower().Contains(searchBox.ToLower()) || s.Description.ToLower().Contains(searchBox.ToLower())).ToListAsync());
-            //    //return Json(await _context.Product.Where(s => s.Name.ToLower().Contains(searchBox.ToLower()) || s.Description.ToLower().Contains(searchBox.ToLower())).ToListAsync());
-            //return Json(await _context.Product.ToListAsync());
         }
 
         #region DB queries

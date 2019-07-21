@@ -11,6 +11,7 @@ namespace MVC_Project.Models
     public class ProductsQuantity
     {
         public int ProdId { get; set; }
+
         public Product Product { get; set; }
 
         public int SizeId{ get; set; }
@@ -20,6 +21,12 @@ namespace MVC_Project.Models
         public ProductColor ProductColor { get; set; }
 
         public int Quantity { get; set; }
+
+        public int CartId { get; set; }
+
+        public Cart cart { get; set; }
+
+
     }
   
 }

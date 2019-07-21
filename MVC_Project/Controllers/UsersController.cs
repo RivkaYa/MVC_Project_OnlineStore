@@ -156,7 +156,7 @@ namespace MVC_Project.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Login([Bind("Id,Username,Email,Password")] User user)
+        public async Task<IActionResult> Login([Bind("Email,Password")] User user)
         {
             var result = from u in _context.User
                          where u.Email == user.Email && u.Password == user.Password
@@ -164,7 +164,7 @@ namespace MVC_Project.Controllers
 
             if (result.ToList().Count > 0)
             {
-                HttpContext.Session.SetString("user", user.Email);
+                HttpContext.Session.SetString("userSession", user.Email);
 
                 return RedirectToAction(nameof(Index));
             }

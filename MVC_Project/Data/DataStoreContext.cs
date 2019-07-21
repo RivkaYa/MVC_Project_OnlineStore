@@ -16,9 +16,17 @@ namespace MVC_Project.Models
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+
+            //one to ine
+
+            modelBuilder.Entity<User>()//product TO Quantity
+                .HasOne<Cart>(pt => pt.cart)
+                .WithOne(p => p.Customer)
+                .HasForeignKey<Cart>(pt => pt.Id);
+
             //many to many - Quantity table
             modelBuilder.Entity<ProductsQuantity>()
-                .HasKey(t => new { t.ProdId, t.ColorId, t.SizeId });
+                .HasKey(t => new { t.ProdId, t.ColorId, t.SizeId , t.CartId});
 
             modelBuilder.Entity<ProductsQuantity>()//product TO Quantity
                 .HasOne(pt => pt.Product)
@@ -34,6 +42,11 @@ namespace MVC_Project.Models
                 .HasOne(pt => pt.ProductSize)
                 .WithMany(t => t.Quantity)
                 .HasForeignKey(pt => pt.SizeId);
+
+           modelBuilder.Entity<ProductsQuantity>()//cart to ProductsQuantity
+               .HasOne(pt => pt.cart)
+               .WithMany(t => t.productList)
+               .HasForeignKey(pt => pt.CartId);
 
 
 
@@ -64,7 +77,7 @@ namespace MVC_Project.Models
 
 
 
-            //Many to many - Product i,ages
+            //Many to many - Product images
             modelBuilder.Entity<ProductsImages>()
                .HasKey(a => new { a.ProdId, a.ColorId});
 
@@ -78,6 +91,8 @@ namespace MVC_Project.Models
                 .HasOne(pt => pt.ItemColor)
                 .WithMany(p => p.Images)
                 .HasForeignKey(pt => pt.ColorId);
+
+            
 
 
         }

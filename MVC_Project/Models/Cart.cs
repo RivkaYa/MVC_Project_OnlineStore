@@ -9,8 +9,9 @@ namespace MVC_Project.Models
     public class Cart
     {
         public int Id { get; set; }
-        public Product ProdId { get; set; }
-        public ProductSize ItemSize { get; set; }
-        public ProductColor ItemColor { get; set; }
+
+        public ICollection<ProductsQuantity> productList { get; set; }
+
+        public User Customer { get; set; }
     }
 }

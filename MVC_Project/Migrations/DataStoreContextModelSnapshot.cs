@@ -34,6 +34,15 @@ namespace MVC_Project.Migrations
                     b.ToTable("Address");
                 });
 
+            modelBuilder.Entity("MVC_Project.Models.Cart", b =>
+                {
+                    b.Property<int>("Id");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Cart");
+                });
+
             modelBuilder.Entity("MVC_Project.Models.OrderStatus", b =>
                 {
                     b.Property<int>("Id")
@@ -176,9 +185,13 @@ namespace MVC_Project.Migrations
 
                     b.Property<int>("SizeId");
 
+                    b.Property<int>("CartId");
+
                     b.Property<int>("Quantity");
 
-                    b.HasKey("ProdId", "ColorId", "SizeId");
+                    b.HasKey("ProdId", "ColorId", "SizeId", "CartId");
+
+                    b.HasIndex("CartId");
 
                     b.HasIndex("ColorId");
 
@@ -217,6 +230,14 @@ namespace MVC_Project.Migrations
                     b.HasIndex("AddressId");
 
                     b.ToTable("User");
+                });
+
+            modelBuilder.Entity("MVC_Project.Models.Cart", b =>
+                {
+                    b.HasOne("MVC_Project.Models.User", "Customer")
+                        .WithOne("cart")
+                        .HasForeignKey("MVC_Project.Models.Cart", "Id")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("MVC_Project.Models.OrdersHistory", b =>
@@ -272,6 +293,11 @@ namespace MVC_Project.Migrations
 
             modelBuilder.Entity("MVC_Project.Models.ProductsQuantity", b =>
                 {
+                    b.HasOne("MVC_Project.Models.Cart", "cart")
+                        .WithMany("productList")
+                        .HasForeignKey("CartId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
                     b.HasOne("MVC_Project.Models.ProductColor", "ProductColor")
                         .WithMany("Quantity")
                         .HasForeignKey("ColorId")

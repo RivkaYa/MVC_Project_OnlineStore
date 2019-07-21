@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace MVC_Project.Migrations
 {
-    public partial class init1 : Migration
+    public partial class @new : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -137,7 +137,8 @@ namespace MVC_Project.Migrations
                     DiscountPct = table.Column<double>(nullable: false),
                     CategoryId = table.Column<int>(nullable: false),
                     IsTradable = table.Column<bool>(nullable: false),
-                    CreatedAt = table.Column<DateTime>(nullable: false)
+                    CreatedAt = table.Column<DateTime>(nullable: false),
+                    Img = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -146,6 +147,23 @@ namespace MVC_Project.Migrations
                         name: "FK_Product_ProductCategory_CategoryId",
                         column: x => x.CategoryId,
                         principalTable: "ProductCategory",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Cart",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Cart", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Cart_User_Id",
+                        column: x => x.Id,
+                        principalTable: "User",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -221,11 +239,18 @@ namespace MVC_Project.Migrations
                     ProdId = table.Column<int>(nullable: false),
                     SizeId = table.Column<int>(nullable: false),
                     ColorId = table.Column<int>(nullable: false),
+                    CartId = table.Column<int>(nullable: false),
                     Quantity = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ProductsQuantity", x => new { x.ProdId, x.ColorId, x.SizeId });
+                    table.PrimaryKey("PK_ProductsQuantity", x => new { x.ProdId, x.ColorId, x.SizeId, x.CartId });
+                    table.ForeignKey(
+                        name: "FK_ProductsQuantity_Cart_CartId",
+                        column: x => x.CartId,
+                        principalTable: "Cart",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_ProductsQuantity_ProductColor_ColorId",
                         column: x => x.ColorId,
@@ -277,6 +302,11 @@ namespace MVC_Project.Migrations
                 column: "ColorId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_ProductsQuantity_CartId",
+                table: "ProductsQuantity",
+                column: "CartId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_ProductsQuantity_ColorId",
                 table: "ProductsQuantity",
                 column: "ColorId");
@@ -304,10 +334,10 @@ namespace MVC_Project.Migrations
                 name: "ProductsQuantity");
 
             migrationBuilder.DropTable(
-                name: "User");
+                name: "OrdersHistory");
 
             migrationBuilder.DropTable(
-                name: "OrdersHistory");
+                name: "Cart");
 
             migrationBuilder.DropTable(
                 name: "ProductColor");
@@ -319,13 +349,16 @@ namespace MVC_Project.Migrations
                 name: "ProductSize");
 
             migrationBuilder.DropTable(
-                name: "Address");
-
-            migrationBuilder.DropTable(
                 name: "OrderStatus");
 
             migrationBuilder.DropTable(
+                name: "User");
+
+            migrationBuilder.DropTable(
                 name: "ProductCategory");
+
+            migrationBuilder.DropTable(
+                name: "Address");
         }
     }
 }
