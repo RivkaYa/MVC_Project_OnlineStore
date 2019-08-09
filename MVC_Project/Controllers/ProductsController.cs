@@ -38,7 +38,7 @@ namespace MVC_Project.Controllers
             return View(await productsList);
         }
 
-        public async Task<PartialViewResult> IndexPartial(string searchBox, int? categoryID)
+        public async Task<PartialViewResult> IndexPartial(string searchBox, int? categoryID, int minPrice, int maxPrice)
         {
             var list = _context.Product.Include(x => x.Images).Where(x => x.Images.Count > 0).Include(y => y.Quantity);
 
@@ -53,6 +53,9 @@ namespace MVC_Project.Controllers
                 list =  list.Where(x => x.CategoryId == categoryID.Value).Include(x => x.Images).Where(x => x.Images.Count > 0).Include(y => y.Quantity);
                 //productsList = productsList.Result.Where(x => x.CategoryId == categoryID.Value).ToList().AsQueryable().ToListAsync();
             }
+
+
+            list = list.Where(x => x.Price >=minPrice && x.Price<=maxPrice).Include(x => x.Images).Where(x => x.Images.Count > 0).Include(y => y.Quantity);
 
 
             return PartialView(await list.ToListAsync());
@@ -100,6 +103,7 @@ namespace MVC_Project.Controllers
                      join quantity in _context.ProductsQuantity on product1.Id equals quantity.ProdId
                      join size in _context.ProductSize on quantity.SizeId equals size.Id
                      select new { Value = size.Id, Text = size.Size };
+            sizeQ = sizeQ.Distinct();
             ViewData["Size"] = new SelectList(await sizeQ.ToListAsync(), "Value", "Text");
 
             return View(product);

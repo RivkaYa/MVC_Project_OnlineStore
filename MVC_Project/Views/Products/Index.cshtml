@@ -14,6 +14,7 @@
 <link href="~/css/site.min.css" rel="stylesheet" />
 <link href="~/css/slicknav.min.css" rel="stylesheet" />
 <link href="~/css/style.css" rel="stylesheet" />
+<link href="~/css/slider.css" rel="stylesheet" />
 
 @*<h2>Index</h2>*@
 <p>
@@ -57,19 +58,27 @@
                         <h2 class="fw-title">refine by</h2>
                         <div class="price-range-wrap">
                             <h4>Price</h4>
-                            <div class="price-range ui-slider ui-corner-all ui-slider-horizontal ui-widget ui-widget-content" data-min="10" data-max="270">
-                                <div class="ui-slider-range ui-corner-all ui-widget-header" style="left: 0%; width: 100%;"></div>
-                                <span tabindex="0" class="ui-slider-handle ui-corner-all ui-state-default" style="left: 0%;">
-                                </span>
-                                <span tabindex="0" class="ui-slider-handle ui-corner-all ui-state-default" style="left: 100%;">
-                                </span>
-                            </div>
-                            <div class="range-slider">
-                                <div class="price-input">
-                                    <input type="text" id="minamount">
-                                    <input type="text" id="maxamount">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <div id="slider-range"></div>
+                                    </div>
                                 </div>
-                            </div>
+                                <div class="row slider-labels">
+                                    <div class="col-xs-6 caption">
+                                        <strong>Min:</strong> <span id="slider-range-value1" value="$@Model.Min(x => x.Price)"></span>
+                                    </div>
+                                    <div class="col-xs-6 text-right caption">
+                                        <strong>Max:</strong> <span id="slider-range-value2" value="$@Model.Max(x => x.Price)"></span>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                            <input type="hidden" name="min-value" id="sliderMin" value="@Model.Min(x=>x.Price) ">
+                                            <input type="hidden" name="max-value" id="sliderMax" value="@Model.Max(x=>x.Price)">
+                                    </div>
+                                </div>
+                            </div>      
                         </div>
                     </div>
                     <!-- #endregion -->
@@ -119,11 +128,13 @@
                     <!-- #region SizeFilter -->
                     <div class="filter-widget mb-0">
                         <h2 class="fw-title">Size</h2>
-                        <div class="fw-size-choose">
+                        @*<div class="fw-size-choose">*@
+                        <div class="custom-control custom-checkbox">
                             @foreach (var item in ViewBag.Size)
                             {
                                 <div class="sc-item">
-                                    <input type="radio" name="sc" id="@item.Text">
+                                    @*<input type="radio" name="sc" id="@item.Text">*@
+                                    <input type="checkbox" size="1" class="custom-control custom-checkbox custom-control-inline" name="sc" id="@item.Text">
                                     <label for="@item.Text">@item.Text</label>
                                 </div>
                             }
@@ -216,12 +227,13 @@
 @section Scripts{
     <script src="~/js/jquery-ui.min.js"></script>
     <script src="~/js/bootstrap.min.js"></script>
-    <script src="~/js/jquery.nicescroll.min.js"></script>
+    <script src="~/js/slider.js"></script>
+    @*<script src="~/js/jquery.nicescroll.min.js"></script>
     <script src="~/js/jquery.slicknav.min.js"></script>
     <script src="~/js/jquery.zoom.min.js"></script>
     <script src="~/js/jquery-3.2.1.min.js"></script>
     <script src="~/js/main.js"></script>
     <script src="~/js/owl.carousel.min.js"></script>
     <script src="~/js/site.js"></script>
-    <script src="~/js/site.min.js"></script>
+    <script src="~/js/site.min.js"></script>*@
 }

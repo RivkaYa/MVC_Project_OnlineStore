@@ -29,9 +29,13 @@ function FilterProductsByParams()
     selectedCategory = selectedCategory;
     var searchBoxText = document.getElementById("searchBox").value;
 
+    //var max = document.getElementById('slider-range-value2').value;
+    //var min = document.getElementById('slider-range-value1').value;
+    var maxPrice = document.getElementsByName('max-value').value;
+    var minPrice = document.getElementsByName('min-value').value;
     $.ajax({
         url: '/Products/IndexPartial',
-        data: { searchBox: searchBoxText, categoryID: selectedCategory },
+        data: { searchBox: searchBoxText, categoryID: selectedCategory, minPrice: minPrice, maxPrice: maxPrice },
         async:true,
         success: function (response) {
             $('#Product').html(response);
