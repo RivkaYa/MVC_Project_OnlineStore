@@ -36,9 +36,23 @@ namespace MVC_Project.Migrations
 
             modelBuilder.Entity("MVC_Project.Models.Cart", b =>
                 {
-                    b.Property<int>("Id");
+                    b.Property<int>("UserId");
 
-                    b.HasKey("Id");
+                    b.Property<int>("ProdId");
+
+                    b.Property<int>("ColorId");
+
+                    b.Property<int>("SizeId");
+
+                    b.Property<int>("Quantity");
+
+                    b.HasKey("UserId", "ProdId", "ColorId", "SizeId");
+
+                    b.HasIndex("ColorId");
+
+                    b.HasIndex("ProdId");
+
+                    b.HasIndex("SizeId");
 
                     b.ToTable("Cart");
                 });
@@ -185,13 +199,9 @@ namespace MVC_Project.Migrations
 
                     b.Property<int>("SizeId");
 
-                    b.Property<int>("CartId");
-
                     b.Property<int>("Quantity");
 
-                    b.HasKey("ProdId", "ColorId", "SizeId", "CartId");
-
-                    b.HasIndex("CartId");
+                    b.HasKey("ProdId", "ColorId", "SizeId");
 
                     b.HasIndex("ColorId");
 
@@ -234,9 +244,24 @@ namespace MVC_Project.Migrations
 
             modelBuilder.Entity("MVC_Project.Models.Cart", b =>
                 {
-                    b.HasOne("MVC_Project.Models.User", "Customer")
-                        .WithOne("cart")
-                        .HasForeignKey("MVC_Project.Models.Cart", "Id")
+                    b.HasOne("MVC_Project.Models.ProductColor", "ProductColor")
+                        .WithMany("CartItems")
+                        .HasForeignKey("ColorId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("MVC_Project.Models.Product", "Product")
+                        .WithMany("CartItems")
+                        .HasForeignKey("ProdId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("MVC_Project.Models.ProductSize", "ProductSize")
+                        .WithMany("CartItems")
+                        .HasForeignKey("SizeId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("MVC_Project.Models.User", "User")
+                        .WithMany("CartItems")
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
@@ -293,11 +318,6 @@ namespace MVC_Project.Migrations
 
             modelBuilder.Entity("MVC_Project.Models.ProductsQuantity", b =>
                 {
-                    b.HasOne("MVC_Project.Models.Cart", "cart")
-                        .WithMany("productList")
-                        .HasForeignKey("CartId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
                     b.HasOne("MVC_Project.Models.ProductColor", "ProductColor")
                         .WithMany("Quantity")
                         .HasForeignKey("ColorId")

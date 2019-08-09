@@ -11,6 +11,7 @@ namespace MVC_Project.Models
         public string Size { get; set; }
 
         public ICollection<ProductsQuantity> Quantity { get; set; }
+        public ICollection<Cart> CartItems { get; set; }
         public ICollection<OrdersHistoryProductsList> Orders { get; set; }
     }
 }

@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace MVC_Project.Migrations
 {
-    public partial class @new : Migration
+    public partial class Init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -155,14 +155,36 @@ namespace MVC_Project.Migrations
                 name: "Cart",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    UserId = table.Column<int>(nullable: false),
+                    ProdId = table.Column<int>(nullable: false),
+                    SizeId = table.Column<int>(nullable: false),
+                    ColorId = table.Column<int>(nullable: false),
+                    Quantity = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Cart", x => x.Id);
+                    table.PrimaryKey("PK_Cart", x => new { x.UserId, x.ProdId, x.ColorId, x.SizeId });
                     table.ForeignKey(
-                        name: "FK_Cart_User_Id",
-                        column: x => x.Id,
+                        name: "FK_Cart_ProductColor_ColorId",
+                        column: x => x.ColorId,
+                        principalTable: "ProductColor",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Cart_Product_ProdId",
+                        column: x => x.ProdId,
+                        principalTable: "Product",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Cart_ProductSize_SizeId",
+                        column: x => x.SizeId,
+                        principalTable: "ProductSize",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Cart_User_UserId",
+                        column: x => x.UserId,
                         principalTable: "User",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -239,18 +261,11 @@ namespace MVC_Project.Migrations
                     ProdId = table.Column<int>(nullable: false),
                     SizeId = table.Column<int>(nullable: false),
                     ColorId = table.Column<int>(nullable: false),
-                    CartId = table.Column<int>(nullable: false),
                     Quantity = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ProductsQuantity", x => new { x.ProdId, x.ColorId, x.SizeId, x.CartId });
-                    table.ForeignKey(
-                        name: "FK_ProductsQuantity_Cart_CartId",
-                        column: x => x.CartId,
-                        principalTable: "Cart",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                    table.PrimaryKey("PK_ProductsQuantity", x => new { x.ProdId, x.ColorId, x.SizeId });
                     table.ForeignKey(
                         name: "FK_ProductsQuantity_ProductColor_ColorId",
                         column: x => x.ColorId,
@@ -270,6 +285,21 @@ namespace MVC_Project.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Cart_ColorId",
+                table: "Cart",
+                column: "ColorId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Cart_ProdId",
+                table: "Cart",
+                column: "ProdId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Cart_SizeId",
+                table: "Cart",
+                column: "SizeId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_OrdersHistory_OrderStatusId",
@@ -302,11 +332,6 @@ namespace MVC_Project.Migrations
                 column: "ColorId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ProductsQuantity_CartId",
-                table: "ProductsQuantity",
-                column: "CartId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_ProductsQuantity_ColorId",
                 table: "ProductsQuantity",
                 column: "ColorId");
@@ -325,6 +350,9 @@ namespace MVC_Project.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "Cart");
+
+            migrationBuilder.DropTable(
                 name: "OrdersHistoryProductsList");
 
             migrationBuilder.DropTable(
@@ -334,10 +362,10 @@ namespace MVC_Project.Migrations
                 name: "ProductsQuantity");
 
             migrationBuilder.DropTable(
-                name: "OrdersHistory");
+                name: "User");
 
             migrationBuilder.DropTable(
-                name: "Cart");
+                name: "OrdersHistory");
 
             migrationBuilder.DropTable(
                 name: "ProductColor");
@@ -349,16 +377,13 @@ namespace MVC_Project.Migrations
                 name: "ProductSize");
 
             migrationBuilder.DropTable(
+                name: "Address");
+
+            migrationBuilder.DropTable(
                 name: "OrderStatus");
 
             migrationBuilder.DropTable(
-                name: "User");
-
-            migrationBuilder.DropTable(
                 name: "ProductCategory");
-
-            migrationBuilder.DropTable(
-                name: "Address");
         }
     }
 }

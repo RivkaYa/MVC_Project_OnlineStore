@@ -12,6 +12,7 @@ namespace MVC_Project.Models
         public string RGB { get; set; }
 
         public ICollection<ProductsQuantity> Quantity { get; set; }
+        public ICollection<Cart> CartItems { get; set; }
         public ICollection<OrdersHistoryProductsList> Orders { get; set; }
         public ICollection<ProductsImages> Images { get; set; }
     }

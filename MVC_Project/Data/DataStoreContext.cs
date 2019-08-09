@@ -19,14 +19,15 @@ namespace MVC_Project.Models
 
             //one to ine
 
-            modelBuilder.Entity<User>()//product TO Quantity
-                .HasOne<Cart>(pt => pt.cart)
-                .WithOne(p => p.Customer)
-                .HasForeignKey<Cart>(pt => pt.Id);
+            //modelBuilder.Entity<User>()//product TO Quantity
+            //    .HasOne<Cart>(pt => pt.cart)
+            //    .WithOne(p => p.Customer)
+            //    .HasForeignKey<Cart>(pt => pt.Id);
 
+            //--------Quantities--------
             //many to many - Quantity table
             modelBuilder.Entity<ProductsQuantity>()
-                .HasKey(t => new { t.ProdId, t.ColorId, t.SizeId , t.CartId});
+                .HasKey(t => new { t.ProdId, t.ColorId, t.SizeId});
 
             modelBuilder.Entity<ProductsQuantity>()//product TO Quantity
                 .HasOne(pt => pt.Product)
@@ -43,10 +44,10 @@ namespace MVC_Project.Models
                 .WithMany(t => t.Quantity)
                 .HasForeignKey(pt => pt.SizeId);
 
-           modelBuilder.Entity<ProductsQuantity>()//cart to ProductsQuantity
-               .HasOne(pt => pt.cart)
-               .WithMany(t => t.productList)
-               .HasForeignKey(pt => pt.CartId);
+           //modelBuilder.Entity<ProductsQuantity>()//cart to ProductsQuantity
+           //    .HasOne(pt => pt.cart)
+           //    .WithMany(t => t.productList)
+           //    .HasForeignKey(pt => pt.CartId);
 
 
 
@@ -92,15 +93,34 @@ namespace MVC_Project.Models
                 .WithMany(p => p.Images)
                 .HasForeignKey(pt => pt.ColorId);
 
-            
 
+            //-----Cart----------------
+            modelBuilder.Entity<Cart>()
+               .HasKey(a => new { a.UserId, a.ProdId, a.ColorId, a.SizeId });
 
+            modelBuilder.Entity<Cart>()//product TO CartItems
+                .HasOne(pt => pt.Product)
+                .WithMany(p => p.CartItems)
+                .HasForeignKey(pt => pt.ProdId);
+
+            modelBuilder.Entity<Cart>()//productColor TO CartItems
+               .HasOne(pt => pt.ProductColor)
+               .WithMany(p => p.CartItems)
+               .HasForeignKey(pt => pt.ColorId);
+
+            modelBuilder.Entity<Cart>()//productSize TO CartItems
+                .HasOne(pt => pt.ProductSize)
+                .WithMany(t => t.CartItems)
+                .HasForeignKey(pt => pt.SizeId);
+
+            modelBuilder.Entity<Cart>()//User TO CartItems
+               .HasOne(pt => pt.User)
+               .WithMany(t => t.CartItems)
+               .HasForeignKey(pt => pt.UserId);
         }
 
 
         public DbSet<MVC_Project.Models.User> User { get; set; }
-
-
         public DbSet<MVC_Project.Models.Product> Product { get; set; }
         public DbSet<MVC_Project.Models.ProductCategory> ProductCategory { get; set; }
         public DbSet<MVC_Project.Models.ProductsQuantity> ProductsQuantity { get; set; }

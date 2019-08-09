@@ -21,12 +21,6 @@ namespace MVC_Project.Models
         public ProductColor ProductColor { get; set; }
 
         public int Quantity { get; set; }
-
-        public int CartId { get; set; }
-
-        public Cart cart { get; set; }
-
-
     }
-  
+
 }
