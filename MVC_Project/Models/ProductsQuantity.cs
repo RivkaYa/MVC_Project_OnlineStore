@@ -11,6 +11,7 @@ namespace MVC_Project.Models
     public class ProductsQuantity
     {
         public int ProdId { get; set; }
+
         public Product Product { get; set; }
 
         public int SizeId{ get; set; }
@@ -21,5 +22,5 @@ namespace MVC_Project.Models
 
         public int Quantity { get; set; }
     }
-  
+
 }

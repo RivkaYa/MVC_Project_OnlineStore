@@ -22,5 +22,7 @@ namespace MVC_Project.Models
         public List<OrdersHistoryProductsList> Orders { get; set; }
         public List<ProductsImages> Images { get; set; }
         public string Img { get; set; }
+        public List<Cart> CartItems { get; set; }
+
     }
 }

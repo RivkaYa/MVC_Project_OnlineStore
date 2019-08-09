@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -54,7 +55,7 @@ namespace MVC_Project.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,NickName,FirstName,LastName,UserType,PhoneNumber,CreatedAt,UpdatedAt")] User user)
+        public async Task<IActionResult> Create([Bind("Id,NickName,FirstName,LastName,UserType,PhoneNumber,Email,CreatedAt,UpdatedAt, password")] User user)
         {
             if (ModelState.IsValid)
             {
@@ -88,7 +89,7 @@ namespace MVC_Project.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,NickName,FirstName,LastName,UserType,PhoneNumber,CreatedAt,UpdatedAt")] User user)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,NickName,FirstName,LastName,UserType,PhoneNumber,Email,CreatedAt,UpdatedAt")] User user)
         {
             if (id != user.Id)
             {
@@ -147,14 +148,39 @@ namespace MVC_Project.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-
-
-
-        public async Task<IActionResult> Login()
+        public IActionResult Login()
         {
-            
+            ViewBag.Fail = false;
             return View();
         }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Login([Bind("Email,Password")] User user)
+        {
+            var result = from u in _context.User
+                         where u.Email == user.Email && u.Password == user.Password
+                         select u;
+
+            if (result.ToList().Count > 0)
+            {
+                HttpContext.Session.SetString("userSession", user.Email);
+
+                return RedirectToAction(nameof(Index));
+            }
+
+            ViewBag.Fail = true;
+
+
+
+            return View(user);
+        }
+
+
+        //public async Task<IActionResult> Login()
+        //{
+        //    return View();
+        //}
 
         private bool UserExists(int id)
         {
@@ -162,24 +188,24 @@ namespace MVC_Project.Controllers
         }
 
 
-        public void LoginFlow(string email, string password)
-        {
-            var hashPas = HashSHA1(password);
-            var user = _context.User.First(x => x.Email.ToLower().Equals(email.ToLower()));
-            string passInDB;
-            if (user!=null)
-            {
-                passInDB = user.Password;
-                if(hashPas.Equals(passInDB))
-                {
-                    //login
-                }
-            }
-            else
-            {
-                throw new Exception("email doesn't exists");//need to not throw an ex' but show an error to the user
-            }
-        }
+        //public void LoginFlow(string email, string password)
+        //{
+        //    var hashPas = HashSHA1(password);
+        //    var user = _context.User.First(x => x.Email.ToLower().Equals(email.ToLower()));
+        //    string passInDB;
+        //    if (user!=null)
+        //    {
+        //        passInDB = user.Password;
+        //        if(hashPas.Equals(passInDB))
+        //        {
+        //            //login
+        //        }
+        //    }
+        //    else
+        //    {
+        //        throw new Exception("email doesn't exists");//need to not throw an ex' but show an error to the user
+        //    }
+        //}
 
 
 
