@@ -128,5 +128,6 @@ namespace MVC_Project.Models
         public DbSet<MVC_Project.Models.ProductColor> ProductColor { get; set; }
         public DbSet<MVC_Project.Models.ProductsImages> ProductsImages { get; set; }
         public DbSet<MVC_Project.Models.Cart> Cart { get; set; }
+        public DbSet<MVC_Project.Models.Address> Address { get; set; }
     }
 }

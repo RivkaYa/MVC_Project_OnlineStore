@@ -26,7 +26,7 @@
                     <div class="product-item">
                         <div class="pi-pic">
                             <div class="tag-sale">ON SALE</div>
-                            <a asp-controller="ProductsQuantities" asp-action="ViewDetails" asp-route-id="@product.Id">
+                            <a asp-controller="Products" asp-action="Details" asp-route-id="@product.Id">
                                 <img asp-action="ViewDetails" asp-route-id="@product.Id" src="~/images/Products/@product.Images[0].ImgSrc" alt="">
                             </a> |
                             <div class="pi-links">

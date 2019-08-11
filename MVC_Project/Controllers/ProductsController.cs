@@ -217,12 +217,12 @@ namespace MVC_Project.Controllers
         //}
 
         
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> AddToCart([Bind("Id,Price,Quantity")] ProductsQuantity product)
-        {
-            return RedirectToAction("Edit", "Carts",  product );
-        }
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public async Task<IActionResult> AddToCart([Bind("Id,Price,Quantity")] ProductsQuantity product)
+        //{
+        //    return RedirectToAction("Edit", "Carts",  product );
+        //}
 
         public async Task<PartialViewResult> Search(string searchBox)
         {
