@@ -48,21 +48,21 @@ namespace MVC_Project.Controllers
         }
 
         // GET: Carts/Create
-        public IActionResult Create()
-        {
-            ViewData["ProdId"] = new SelectList(_context.Product, "Id", "Id");
-            ViewData["ColorId"] = new SelectList(_context.ProductColor, "Id", "Id");
-            ViewData["SizeId"] = new SelectList(_context.ProductSize, "Id", "Id");
-            ViewData["UserId"] = new SelectList(_context.User, "Id", "Id");
-            return View();
-        }
+        //public IActionResult Create()
+        //{
+        //    ViewData["ProdId"] = new SelectList(_context.Product, "Id", "Id");
+        //    ViewData["ColorId"] = new SelectList(_context.ProductColor, "Id", "Id");
+        //    ViewData["SizeId"] = new SelectList(_context.ProductSize, "Id", "Id");
+        //    ViewData["UserId"] = new SelectList(_context.User, "Id", "Id");
+        //    return View();
+        //}
 
         // POST: Carts/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("UserId,ProdId,SizeId,ColorId,Quantity")] Cart cart)
+        public async Task<IActionResult> Create( Cart cart)
         {
             if (ModelState.IsValid)
             {

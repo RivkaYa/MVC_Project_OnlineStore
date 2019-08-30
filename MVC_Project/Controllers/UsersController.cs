@@ -55,7 +55,7 @@ namespace MVC_Project.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,NickName,FirstName,LastName,UserType,PhoneNumber,Email,CreatedAt,UpdatedAt, password")] User user)
+        public async Task<IActionResult> Create([Bind("Id,NickName,FirstName,LastName,UserType,PhoneNumber,Email,CreatedAt,UpdatedAt, Password")] User user)
         {
             if (ModelState.IsValid)
             {
@@ -158,11 +158,11 @@ namespace MVC_Project.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login([Bind("Email,Password")] User user)
         {
-            var result = from u in _context.User
+            var users = from u in _context.User
                          where u.Email == user.Email && u.Password == user.Password
                          select u;
 
-            if (result.ToList().Count > 0)
+            if (users.ToList().Count > 0)
             {
                 HttpContext.Session.SetString("userSession", user.Email);
 

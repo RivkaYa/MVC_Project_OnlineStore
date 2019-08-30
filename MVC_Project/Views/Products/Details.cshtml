@@ -55,6 +55,7 @@
 
             <div class="col-lg-6 product-details">
                 <h2 class="p-title">@Html.DisplayFor(model => model.Name)</h2>
+                ID:<h2 class="p-title" name="productID">@Html.DisplayFor(model => model.Id)</h2>
                 <h3 class="p-price">$ @Html.DisplayFor(model => model.Price) </h3>
                 <h4 class="p-stock">Available: <span>@ViewBag.IsAvailable</span></h4>
                 <div class="p-rating">
@@ -107,7 +108,7 @@
                     <p>Quantity</p>
                     <div class="pro-qty"><input type="text" value="1"></div>
                 </div>
-                <a href="#" class="site-btn">SHOP NOW</a>
+                <a asp-controller="Products" asp-action="AddToCart" class="site-btn">Add To Cart</a>
                 <div id="accordion" class="accordion-area">
                     <div class="panel">
                         <div class="panel-header" id="headingOne">

@@ -210,13 +210,19 @@ namespace MVC_Project.Controllers
             return View(product);
         }
 
-        // להעביר למקשרת
-        //public async Task<IActionResult> AddToCart(int idProduct)
-        //{
-        //    return ;
-        //}
-
         
+        public async Task<IActionResult> AddToCart(int productID, int sizeID, int colorID, int quantity)
+        {
+            productID = 3;
+            sizeID = 1;
+            colorID = 1;
+            quantity = 1;
+
+            Cart cart = new Cart() { UserId = 1, ProdId = productID, SizeId = sizeID, ColorId = colorID, Quantity = quantity };
+            return RedirectToAction("Create", "Carts", cart);
+        }
+
+
         //[HttpPost]
         //[ValidateAntiForgeryToken]
         //public async Task<IActionResult> AddToCart([Bind("Id,Price,Quantity")] ProductsQuantity product)
