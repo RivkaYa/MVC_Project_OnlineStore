@@ -47,14 +47,15 @@
     </div>*@
 
     <!-- Header section -->
-    <header class="header-section">
+    <header class="header-section" style="background-color:antiquewhite">
+        
         <div class="header-top">
             <div class="container">
                 <div class="row">
                     <div class="col-lg-2 text-center text-lg-left">
                         <!-- logo -->
                         <a href="./index.html" class="site-logo">
-                            <img src="~/images/logo.png" alt=""/>
+                            <img src="~/images/2020.png" alt=""/>
                             @*<img src="Images/logo_200X200.png" alt="">*@
                         </a>
                     </div>
@@ -89,15 +90,15 @@
 
                     @*<li><a href="#">Home</a></li>*@
                     <li><a asp-controller="Home" asp-action="Index">Home</a></li>
-                    <li><a asp-controller="Products" asp-action="Index">Shop Now!</a></li>
-                    <li><a asp-controller="" asp-action="">Wishlist</a></li>
-                    <li><a asp-controller="" asp-action="">Orders History</a></li>
+                    <li><a asp-controller="Products" asp-action="Index">Our products</a></li>
+                    @*<li><a asp-controller="" asp-action="">Wishlist</a></li>*@
+                    @*<li><a asp-controller="" asp-action="">Orders History</a></li>*@
                     <li><a asp-controller="" asp-action="">Cart</a></li>
-                    <li><a asp-controller="Users" asp-action="Edit">My Account</a></li>
+                    @*<li><a asp-controller="Users" asp-action="Edit">My Account</a></li>*@
                     <li><a asp-controller="aboutUs" asp-action="Index">about us</a></li>
 
-                    <li><a href="#">Jewelry<span class="new">New</span></a> </li>
-                    <li>
+                    @*<li><a href="#">Jewelry<span class="new">New</span></a> </li>*@
+                    @*<li>
                         <a href="#">Shoes</a>
                         <ul class="sub-menu">
                             <li><a href="#">Sneakers</a></li>
@@ -106,8 +107,8 @@
                             <li><a href="#">Boots</a></li>
                             <li><a href="#">Flip Flops</a></li>
                         </ul>
-                    </li>
-                    <li>
+                    </li>*@
+                    @*<li>
                         <a href="#">Pages</a>
                         <ul class="sub-menu">
                             <li><a href="./product.html">Product Page</a></li>
@@ -116,8 +117,8 @@
                             <li><a href="./checkout.html">Checkout Page</a></li>
                             <li><a href="./contact.html">Contact Page</a></li>
                         </ul>
-                    </li>
-                    <li><a href="#">Blog</a></li>
+                    </li>*@
+                    <li><a href="#">Blog<span class="new">New</span></a></li>
                 </ul>
             </div>
         </nav>
@@ -145,7 +146,7 @@
                 </div>
             </div>
         </nav>*@
-    <div class="container body-content">
+    <div class="container body-content" style="background-color:whitesmoke">
         @RenderBody()
         <hr />
         <footer>
